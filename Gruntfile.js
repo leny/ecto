@@ -14,7 +14,7 @@ module.exports = function( grunt ) {
 
     grunt.initConfig( {
         "bumpup": "package.json",
-        "concurent": {
+        "concurrent": {
             "options": {
                 "logConcurrentOutput": true
             },
@@ -43,20 +43,21 @@ module.exports = function( grunt ) {
                 "quotmark": "double",
                 "sub": true,
                 "undef": true,
-                "unused": true
+                "unused": true,
+                "white": false
             }
         },
         "nodemon": {
             "server": {
                 "options": {
-                    "debug": true
+                    "debug": true,
                     "file": "src/server.js",
                     "watchedExtensions": [
                         "js",
                         "jade"
                     ],
                     "watchedFolders": [
-                        "bin"
+                        "src"
                     ]
                 }
             }
@@ -82,9 +83,9 @@ module.exports = function( grunt ) {
     grunt.loadNpmTasks( "grunt-concurrent" );
 
     grunt.registerTask( "default", [
-        "clean",
+        "clear",
         "jshint",
-        "bumpbup:build"
+        "bumpup:build"
     ] );
 
     grunt.registerTask( "check", [
@@ -92,26 +93,26 @@ module.exports = function( grunt ) {
     ] );
 
     grunt.registerTask( "work", [
-        "clean",
+        "clear",
         "concurrent"
     ] );
 
     grunt.registerTask( "patch", [
-        "clean",
+        "clear",
         "jshint",
-        "bumpbup:patch"
+        "bumpup:patch"
     ] );
 
     grunt.registerTask( "minor", [
-        "clean",
+        "clear",
         "jshint",
-        "bumpbup:minor"
+        "bumpup:minor"
     ] );
 
     grunt.registerTask( "major", [
-        "clean",
+        "clear",
         "jshint",
-        "bumpbup:major"
+        "bumpup:major"
     ] );
 
 };

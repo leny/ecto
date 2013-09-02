@@ -18,14 +18,16 @@
     "config": {
         "env": {
             "dev": {
-                "static": "static/",
                 "domain": "blog.ecto.lan",
-                "port": 50001
+                "port": 50001,
+                "secret": "my_super_secret_phrase",
+                "static": "static/"
             },
             "prod": {
-                "static": "",
-                "domains": "",
-                "port": 0
+                "domain": "",
+                "port": 0,
+                "secret": "",
+                "static": ""
             }
         },
         "users": {
@@ -49,7 +51,6 @@
     },
     "dependencies": {
         "express": "~3.1.0",
-        "jade": "~0.30.0",
-        "cli-color": "~0.2.2"
+        "jade": "~0.30.0"
     }
 }
