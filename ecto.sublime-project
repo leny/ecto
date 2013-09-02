@@ -11,15 +11,19 @@
                 "bin",
                 "node_modules",
                 ".sass-cache",
-                "src",
+                "server",
                 "static"
             ],
             "name": "ecto",
             "path": "."
         },
         {
-            "path": "./src",
-            "name": "src"
+            "path": "./server",
+            "name": "server"
+        },
+        {
+            "path": "./client",
+            "name": "client"
         },
         {
             "path": "./static",
