@@ -13,6 +13,9 @@ n stable
 npm install -g grunt-cli
 npm install -g nodemon
 # /-- npm packages
+# -- PROJECT DEPLOY
+cd /vagrant
+npm install
 # -- END
 ELAPSED_TIME=$(($SECONDS - $START_TIME))
 # clear
@@ -20,8 +23,10 @@ echo "------------------------"
 echo "- Provisionning ended. -"
 echo "------------------------"
 echo "Duration : $(($ELAPSED_TIME/60)) min $(($ELAPSED_TIME%60)) sec"
-echo "-- node `node --version`"
-echo "-- npm v`npm --version`"
+echo "------------------------"
+echo "node `node --version`"
+echo "npm v`npm --version`"
+echo "`grunt --version`"
 echo "------------------------"
 SCRIPT
 
