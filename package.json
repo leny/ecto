@@ -1,0 +1,55 @@
+{
+    "name": "ecto",
+    "version": "0.0.1-0",
+    "private": false,
+    "description": "Simple/fast node.js blogging system.",
+    "author": {
+        "name": "Pierre-Antoine 'leny' Delnatte",
+        "email": "pierre-antoine@delnatte.be",
+        "url": "http://leny.me"
+    },
+    "homepage": "https://github.com/leny/ecto",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/leny/ecto.git"
+    },
+    "license": "MIT",
+    "production": false,
+    "config": {
+        "env": {
+            "dev": {
+                "static": "static/",
+                "domain": "blog.ecto.lan",
+                "port": 50001
+            },
+            "prod": {
+                "static": "",
+                "domains": "",
+                "port": 0
+            }
+        },
+        "users": {
+            "test": "test"
+        }
+    },
+    "scripts": {
+        "start": "node src/server.js"
+    },
+    "engines": {
+        "node": ">= 0.10.0"
+    },
+    "devDependencies": {
+        "grunt": "~0.4.1",
+        "grunt-clear": "~0.2.1",
+        "grunt-contrib-jshint": "~0.1.1",
+        "grunt-bumpup": "~0.2.0",
+        "grunt-contrib-watch": "~0.2.0",
+        "grunt-nodemon": "~0.0.4",
+        "grunt-concurrent": "~0.2.0"
+    },
+    "dependencies": {
+        "express": "~3.1.0",
+        "jade": "~0.30.0",
+        "cli-color": "~0.2.2"
+    }
+}
