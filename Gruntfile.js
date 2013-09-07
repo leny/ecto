@@ -25,7 +25,7 @@ module.exports = function( grunt ) {
         },
         "jshint": {
             "files": [
-                "src/**/*.js"
+                "server/**/*.js"
             ],
             "options": {
                 "boss": true,
@@ -51,21 +51,22 @@ module.exports = function( grunt ) {
             "server": {
                 "options": {
                     "debug": true,
-                    "file": "src/server.js",
+                    "file": "server/server.js",
                     "watchedExtensions": [
                         "js",
                         "jade"
                     ],
                     "watchedFolders": [
-                        "src"
-                    ]
+                        "server"
+                    ],
+                    "legacyWatch": true
                 }
             }
         },
         "watch": {
             "files": [
-                "src/**/*.js",
-                "src/**/*.jade"
+                "server/**/*.js",
+                "server/**/*.jade"
             ],
             "tasks": [
                 "clear",

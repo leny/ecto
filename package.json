@@ -1,6 +1,6 @@
 {
     "name": "ecto",
-    "version": "0.0.1-6",
+    "version": "0.0.1-7",
     "private": false,
     "description": "Simple/fast node.js blogging system.",
     "author": {
@@ -36,7 +36,7 @@
         "grunt-contrib-jshint": "~0.1.1",
         "grunt-bumpup": "~0.2.0",
         "grunt-contrib-watch": "~0.2.0",
-        "grunt-nodemon": "~0.0.4",
+        "grunt-nodemon": "~0.1.1",
         "grunt-concurrent": "~0.2.0"
     },
     "dependencies": {
