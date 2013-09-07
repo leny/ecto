@@ -174,6 +174,12 @@ var deletePost = function( oRequest, oResponse ) {
     }
 }; // deletePost
 
+var logout = function( oRequest, oResponse ) {
+    oRequest.session.destroy( function() {
+        oResponse.redirect( "/" );
+    } );
+}; // logout
+
 exports.init = function( oApp ) {
     oApp.get( "/admin", connexion );
     oApp.post( "/admin", login );
@@ -183,5 +189,5 @@ exports.init = function( oApp ) {
     oApp.post( "/admin/save", adminMiddleware, savePost );
     oApp.get( "/admin/delete/:file.json", adminMiddleware, askDeletePost );
     oApp.post( "/admin/delete", adminMiddleware, deletePost );
-    // oApp.get( "/admin/exit", logout );
+    oApp.get( "/admin/exit", adminMiddleware, logout );
 };
