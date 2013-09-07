@@ -23,7 +23,7 @@ var homepage = function( oRequest, oResponse ) {
         i, sPostFile, oPost, dPostDate, iPostDate;
     aPostsFiles.sort().reverse();
     for( i = -1; sPostFile = aPostsFiles[ ++i ]; ) {
-        oPost = require( sPostsPath + sPostFile );
+        oPost = JSON.parse( fs.readFileSync( sPostsPath + sPostFile, { "encoding" : "utf8" } ) );
         iPostDate = ( dPostDate = new Date( oPost.date ) ).getTime();
         if( iPostDate <= iNow ) {
             oPost.url = sPostFile.replace( ".json", "" ) + "-" + oPost.title.toLowerCase().replace( /[^a-z0-9]+/g, "-" ) + ".html";
@@ -44,7 +44,7 @@ var article = function( oRequest, oResponse ) {
     if( !fs.existsSync( sPostFile ) ) {
         return oResponse.send( 404 );
     }
-    oPost = require( sPostFile );
+    oPost = JSON.parse( fs.readFileSync( sPostsPath + sPostFile, { "encoding" : "utf8" } ) );
     iPostDate = ( dPostDate = new Date( oPost.date ) ).getTime();
     if( iPostDate > iNow ) {
         return oResponse.send( 403 );

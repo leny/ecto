@@ -13,6 +13,7 @@
 var root = __dirname + "/..",
     fs = require( "fs" ),
     crypto = require( "crypto" ),
+    markdown = require( "markdown" ).markdown,
     pkg = require( root + "/../package.json" ),
     sPostsPath = root + "/../" + pkg.config.posts;
 
@@ -51,7 +52,7 @@ var listPosts = function( oRequest, oResponse ) {
         i, sPostFile, oPost, dPostDate, iPostDate;
     aPostsFiles.sort().reverse();
     for( i = -1; sPostFile = aPostsFiles[ ++i ]; ) {
-        oPost = require( sPostsPath + sPostFile );
+        oPost = JSON.parse( fs.readFileSync( sPostsPath + sPostFile, { "encoding" : "utf8" } ) );
         iPostDate = ( dPostDate = new Date( oPost.date ) ).getTime();
         oPost.file = sPostFile;
         oPost.date = dPostDate.toUTCString();
@@ -72,6 +73,30 @@ var addPost = function( oRequest, oResponse ) {
     } );
 }; // addPost
 
+var editPost = function( oRequest, oResponse ) {
+    var sFileName = oRequest.params.file + ".json",
+        sFilePath = sPostsPath + sFileName,
+        aPostDateElements, oPost;
+    if( !fs.existsSync( sFilePath ) ) {
+        return oResponse.send( 404 );
+    }
+    oPost = JSON.parse( fs.readFileSync( sFilePath, { "encoding" : "utf8" } ) );
+    aPostDateElements = oPost.date.split( " " );
+    return oResponse.render( "admin/edit", {
+        "pageTitle": "ajouter un billet",
+        "post": {
+            "file": sFileName,
+            "title": oPost.title,
+            "date": aPostDateElements[ 0 ],
+            "time": aPostDateElements[ 1 ],
+            "content": oPost.content,
+            "formatted_content": markdown.toHTML( oPost.content )
+        },
+        "error": false
+    } );
+    oResponse.send( "soon." );
+}; // editPost
+
 var savePost = function( oRequest, oResponse ) {
     var _month, _day, _hours, _minutes, oPostObject, sFileName, sFilePath,
         dNow = new Date(),
@@ -79,21 +104,14 @@ var savePost = function( oRequest, oResponse ) {
         sNowMonth = ( _month = dNow.getMonth() ) < 9 ? ++_month : "0" + ( ++_month ),
         sNowDay = ( _day = dNow.getDate() ) < 10 ? _day : "0" + _day,
         sNowHours = ( _hours = ( dNow.getHours() ) ) < 10 ? ++_hours : "0" + ( ++_hours ),
-        sNowMinutes = ( _minutes = ( dNow.getMinutes() ) ) < 10 ? ++_minutes : "0" + ( ++_minutes ),
-        sNowSeconds = "00";
+        sNowMinutes = ( _minutes = ( dNow.getMinutes() ) ) < 10 ? ++_minutes : "0" + ( ++_minutes );
     oPostObject = {
         "title": oRequest.body.title || "Untitled post",
-        "date": ( oRequest.body.date || iNowYear + "-" + sNowMonth + "-" + sNowDay ) + " " + ( oRequest.body.time || sNowHours + ":" + sNowMinutes + ":" + sNowSeconds ),
+        "date": ( oRequest.body.date || iNowYear + "-" + sNowMonth + "-" + sNowDay ) + " " + ( oRequest.body.time || sNowHours + ":" + sNowMinutes ),
         "content": oRequest.body.content
     };
     sFileName = oPostObject.date.replace( /([\s:-]?)/g, "" ) + ".json";
     sFilePath = sPostsPath + sFileName;
-    if( !!oRequest.body.file ) {
-        // EDIT
-        // TODO check file existence
-        // TODO write in file
-        // TODO rename file if needed
-    }
     fs.writeFile( sFilePath, JSON.stringify( oPostObject ), function( oError ) {
         if( oError ) {
             return oResponse.render( "admin/edit", {
@@ -107,6 +125,9 @@ var savePost = function( oRequest, oResponse ) {
                 "error": true
             } );
         }
+        if( !!oRequest.body.file !== sFileName ) {
+            fs.unlinkSync( sPostsPath + oRequest.body.file );
+        }
         oResponse.redirect( "/admin/list" );
     } );
 }; // savePost
@@ -116,7 +137,7 @@ exports.init = function( oApp ) {
     oApp.post( "/admin", login );
     oApp.get( "/admin/list", adminMiddleware, listPosts );
     oApp.get( "/admin/add", adminMiddleware, addPost );
-    // oApp.get( "/admin/edit/:file.json", adminMiddleware, editPost );
+    oApp.get( "/admin/edit/:file.json", adminMiddleware, editPost );
     oApp.post( "/admin/save", adminMiddleware, savePost );
     // oApp.get( "/admin/delete/:file.json", adminMiddleware, deletePost );
     // oApp.get( "/admin/exit", logout );

@@ -3,22 +3,23 @@ extends ../layouts/admin
 block content
     form( action="/admin/save", method="post" )
         fieldset
-            input( name="file", type="hidden", value= post.file && false )/
+            input( name="file", type="hidden", value=( post.file || false ) )/
 
             div.form-elt
                 label( for="title" ) Title :
-                input#title( name="title", type="text", placeholder="titre du billet", required, autofocus, value= post.title && false )/
+                input#title( name="title", type="text", placeholder="titre du billet", required, autofocus, value=( post.title || false ) )/
 
             div.form-elt
                 label( for="date" ) Date de publication :
-                input#date( name="date", type="date", required, value= post.date && false )/
-                input#time( name="time", type="time", required, value= post.time && false )/
+                input#date( name="date", type="date", required, value=( post.date || false ) )/
+                input#time( name="time", type="time", required, value=( post.time || false ) )/
 
             div.article-redactor
                 div.form-elt
                     label( for="content" ) Content :
                     textarea#content( name="content", rows=20, cols=30, required )= post.content
-                div.preview= post.formatted_content
+                div.preview
+                    != post.formatted_content
 
             if( error )
                 div.error
