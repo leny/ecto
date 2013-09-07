@@ -1,0 +1,22 @@
+!!!
+html
+    head
+        meta( charset="utf-8" )/
+        title= pageTitle
+
+    body
+        #wrapper
+            header
+                h1= pageTitle
+
+            block content
+
+            block sidebar
+
+            footer
+                p
+                    | Ce blog utilise le moteur
+                    = " "
+                    a( href="http://github.com/leny/ecto" ) ecto
+
+        block scripts

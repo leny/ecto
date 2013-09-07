@@ -24,8 +24,9 @@ var homepage = function( oRequest, oResponse ) {
         console.log( oPost );
         aPosts.push( oPost );
     }
-    oResponse.render( "index", {
-        "pageTitle": "ecto"
+    oResponse.render( "public/list", {
+        "pageTitle": "ecto",
+        "posts": aPosts
     } );
 }; // homepage
 

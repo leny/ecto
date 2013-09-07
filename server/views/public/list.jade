@@ -1,0 +1,15 @@
+extends ../layouts/public
+
+block content
+    section
+        h2 Liste des billets
+
+        ul
+            - for( var i = -1, oPost; oPost = posts[ ++i ]; )
+                li
+                    a( href="#" )= oPost.title
+
+block sidebar
+    aside
+        h2 Le blog de Leny
+        p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor.
