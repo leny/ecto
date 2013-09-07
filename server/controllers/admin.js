@@ -10,11 +10,10 @@
 
 "use strict";
 
-/*
 var root = __dirname + "/..",
-    pkg = require( root + "/../package.json" ),
-    sPostsPath = root + "/../" + pkg.config.posts;
-*/
+    crypto = require( "crypto" ),
+    pkg = require( root + "/../package.json" );
+    // sPostsPath = root + "/../" + pkg.config.posts;
 
 var connexion = function( oRequest, oResponse ) {
     if( oRequest.session.connected ) {
@@ -26,9 +25,20 @@ var connexion = function( oRequest, oResponse ) {
     } );
 }; // connexion
 
+var login = function( oRequest, oResponse ) {
+    if( pkg.config.users[ oRequest.body.login ] === ( ( crypto.createHash( "sha1" ) ).update( oRequest.body.pass.trim() ) ).digest( "hex" ) ) {
+        oRequest.session.connected = true;
+        return oResponse.redirect( "/admin/list" );
+    }
+    oResponse.render( "admin/connect", {
+        "pageTitle": "connexion",
+        "error": true
+    } );
+}; // login
+
 exports.init = function( oApp ) {
     oApp.get( "/admin", connexion );
-    // oApp.post( "/admin", login );
+    oApp.post( "/admin", login );
     // oApp.get( "/admin/list", listPosts );
     // oApp.get( "/admin/add", addPost )
     // oApp.get( "/admin/edit/:file.json", editPost );

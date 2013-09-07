@@ -9,11 +9,15 @@ block content
 
             div.form-elt
                 label( for="login" ) Login :
-                input#login( name="login", type="text", placeholder="Votre login", autofocus )/
+                input#login( name="login", type="text", placeholder="Votre login", required, autofocus )/
 
             div.form-elt
                 label( for="pass" ) Mot de passe :
-                input#pass( name="pass", type="password", placeholder="Votre mot de passe" )/
+                input#pass( name="pass", type="password", placeholder="Votre mot de passe", required )/
+
+            if( error )
+                div.error
+                    p Login et/ou mot de passe incorrect !
 
             div.button
                 button( type="submit" ) Connexion
