@@ -21,6 +21,7 @@ var homepage = function( oRequest, oResponse ) {
         aPosts = [],
         iNow = ( new Date() ).getTime(),
         i, sPostFile, oPost, dPostDate, iPostDate;
+    aPostsFiles.sort().reverse();
     for( i = -1; sPostFile = aPostsFiles[ ++i ]; ) {
         oPost = require( sPostsPath + sPostFile );
         iPostDate = ( dPostDate = new Date( oPost.date ) ).getTime();
