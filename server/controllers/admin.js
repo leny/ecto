@@ -82,8 +82,8 @@ var editPost = function( oRequest, oResponse ) {
     }
     oPost = JSON.parse( fs.readFileSync( sFilePath, { "encoding" : "utf8" } ) );
     aPostDateElements = oPost.date.split( " " );
-    return oResponse.render( "admin/edit", {
-        "pageTitle": "ajouter un billet",
+    oResponse.render( "admin/edit", {
+        "pageTitle": "éditer un billet",
         "post": {
             "file": sFileName,
             "title": oPost.title,
@@ -94,7 +94,6 @@ var editPost = function( oRequest, oResponse ) {
         },
         "error": false
     } );
-    oResponse.send( "soon." );
 }; // editPost
 
 var savePost = function( oRequest, oResponse ) {
@@ -115,7 +114,7 @@ var savePost = function( oRequest, oResponse ) {
     fs.writeFile( sFilePath, JSON.stringify( oPostObject ), function( oError ) {
         if( oError ) {
             return oResponse.render( "admin/edit", {
-                "pageTitle": "ajouter un billet",
+                "pageTitle": !!oRequest.body.file ? "éditer un billet" : "ajouter un billet",
                 "post": {
                     "title": oRequest.body.title,
                     "date": oRequest.body.date,
@@ -132,6 +131,49 @@ var savePost = function( oRequest, oResponse ) {
     } );
 }; // savePost
 
+var askDeletePost = function( oRequest, oResponse ) {
+    var sFileName = oRequest.params.file + ".json",
+        sFilePath = sPostsPath + sFileName,
+        oPost;
+    if( !fs.existsSync( sFilePath ) ) {
+        return oResponse.send( 404 );
+    }
+    oPost = JSON.parse( fs.readFileSync( sFilePath, { "encoding" : "utf8" } ) );
+    oResponse.render( "admin/delete", {
+        "pageTitle": "supprimer un billet",
+        "post": {
+            "file": sFileName,
+            "title": oPost.title
+        },
+        "error": false
+    } );
+}; // askDeletePost
+
+var deletePost = function( oRequest, oResponse ) {
+    var sFilePath = sPostsPath + oRequest.body.file;
+    if( oRequest.body.action === "confirm" ) {
+        if( !fs.existsSync( sFilePath ) ) {
+            return oResponse.send( 404 );
+        }
+        fs.unlink( sFilePath, function( oError ) {
+            if( oError ) {
+                oPost = JSON.parse( fs.readFileSync( sFilePath, { "encoding" : "utf8" } ) );
+                return oResponse.render( "admin/delete", {
+                    "pageTitle": "supprimer un billet",
+                    "post": {
+                        "file": sFileName,
+                        "title": oPost.title
+                    },
+                    "error": true
+                } );
+            }
+            oResponse.redirect( "/admin/list" );
+        } );
+    } else {
+        oResponse.redirect( "/admin/list" );
+    }
+}; // deletePost
+
 exports.init = function( oApp ) {
     oApp.get( "/admin", connexion );
     oApp.post( "/admin", login );
@@ -139,6 +181,7 @@ exports.init = function( oApp ) {
     oApp.get( "/admin/add", adminMiddleware, addPost );
     oApp.get( "/admin/edit/:file.json", adminMiddleware, editPost );
     oApp.post( "/admin/save", adminMiddleware, savePost );
-    // oApp.get( "/admin/delete/:file.json", adminMiddleware, deletePost );
+    oApp.get( "/admin/delete/:file.json", adminMiddleware, askDeletePost );
+    oApp.post( "/admin/delete", adminMiddleware, deletePost );
     // oApp.get( "/admin/exit", logout );
 };

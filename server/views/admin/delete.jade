@@ -1,0 +1,19 @@
+extends ../layouts/admin
+
+block content
+    form( action="/admin/delete", method="post" )
+        fieldset
+            input( name="file", type="hidden", value=post.file )/
+
+            div.message
+                p= "Êtes-vous sûr de vouloir supprimer le billet " + post.title + " ?"
+
+            if( error )
+                div.error
+                    p Error !
+
+            div.button
+                button#discard( type="submit", name="action", value="discard" ) Annuler
+                button#confirm( type="submit", name="action", value="confirm" ) Confirmer
+
+
