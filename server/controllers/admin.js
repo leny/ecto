@@ -60,6 +60,14 @@ var listPosts = function( oRequest, oResponse ) {
     } );
 }; // listPosts
 
+var addPost = function( oRequest, oResponse ) {
+    oResponse.render( "admin/edit", {
+        "pageTitle": "ajouter un billet",
+        "post": {},
+        "error": false
+    } );
+}; // addPost
+
 exports.init = function( oApp ) {
     oApp.get( "/admin", connexion );
     oApp.post( "/admin", login );

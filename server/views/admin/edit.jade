@@ -1,0 +1,28 @@
+extends ../layouts/admin
+
+block content
+    form( action="/admin/save", method="post" )
+        fieldset
+            div.form-elt
+                label( for="title" ) Title :
+                input#title( name="title", type="text", placeholder="titre du billet", required, autofocus, value= post.title && false )/
+
+            div.form-elt
+                label( for="date" ) Date de publication :
+                input#date( name="date", type="date", required, value= post.date && false )/
+                input#time( name="time", type="time", required, value= post.date && false )/
+
+            div.article-redactor
+                div.form-elt
+                    label( for="content" ) Content :
+                    textarea#content( name="content", required )= post.content
+                div.preview= post.formatted_content
+
+            if( error )
+                div.error
+                    p Error ?
+
+            div.button
+                button( type="submit" ) Enregistrer
+
+
