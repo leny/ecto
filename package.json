@@ -16,26 +16,16 @@
     "license": "MIT",
     "production": false,
     "config": {
-        "env": {
-            "dev": {
-                "domain": "blog.ecto.lan",
-                "port": 50001,
-                "secret": "my_super_secret_phrase",
-                "static": "static/"
-            },
-            "prod": {
-                "domain": "",
-                "port": 0,
-                "secret": "",
-                "static": ""
-            }
-        },
+        "domain": "blog.ecto.lan",
+        "port": 50001,
+        "secret": "my_super_secret_phrase",
+        "posts": "posts/",
         "users": {
             "test": "test"
         }
     },
     "scripts": {
-        "start": "node src/server.js"
+        "start": "node server/server.js"
     },
     "engines": {
         "node": ">= 0.10.0"

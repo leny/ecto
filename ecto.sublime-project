@@ -12,7 +12,8 @@
                 "node_modules",
                 ".sass-cache",
                 "server",
-                "static"
+                "client",
+                "posts"
             ],
             "name": "ecto",
             "path": "."
@@ -26,8 +27,8 @@
             "name": "client"
         },
         {
-            "path": "./static",
-            "name": "static",
+            "path": "./posts",
+            "name": "posts",
             "file_exclude_patterns": [
                 "config.rb"
             ],

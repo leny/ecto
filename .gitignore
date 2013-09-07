@@ -16,3 +16,6 @@ npm-debug.log
 .vagrant
 
 node_modules
+posts
+
+*.sublime-workspace
