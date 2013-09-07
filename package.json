@@ -1,6 +1,6 @@
 {
     "name": "ecto",
-    "version": "0.0.1-7",
+    "version": "0.0.1-13",
     "private": false,
     "description": "Simple/fast node.js blogging system.",
     "author": {
@@ -16,13 +16,7 @@
     "license": "MIT",
     "production": false,
     "config": {
-        "domain": "blog.ecto.lan",
-        "port": 50001,
-        "secret": "my_super_secret_phrase",
-        "posts": "posts/",
-        "users": {
-            "test": "test"
-        }
+        "port": 50001
     },
     "scripts": {
         "start": "node server/server.js"
