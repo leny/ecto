@@ -1,0 +1,10 @@
+extends ../layouts/public
+
+block content
+    article
+        header
+            h2= article.title
+            time( datetime=article.date )= article.date
+
+        div.content
+            != article.content
