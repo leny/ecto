@@ -51,7 +51,7 @@ var article = function( oRequest, oResponse ) {
     oPost.date = dPostDate.toUTCString();
     oPost.content = markdown.toHTML( oPost.content );
     oResponse.render( "public/article", {
-        "pageTitle": "ecto > " + oPost.title,
+        "pageTitle": "ecto",
         "article": oPost
     } );
 }; // article

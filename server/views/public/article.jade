@@ -1,5 +1,8 @@
 extends ../layouts/public
 
+block title
+    title= pageTitle + " > " + article.title
+
 block content
     article
         header
@@ -8,3 +11,7 @@ block content
 
         div.content
             != article.content
+
+        footer
+            p
+                a( href="/" ) Retour
