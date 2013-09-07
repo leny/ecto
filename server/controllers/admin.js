@@ -11,9 +11,10 @@
 "use strict";
 
 var root = __dirname + "/..",
+    fs = require( "fs" ),
     crypto = require( "crypto" ),
-    pkg = require( root + "/../package.json" );
-    // sPostsPath = root + "/../" + pkg.config.posts;
+    pkg = require( root + "/../package.json" ),
+    sPostsPath = root + "/../" + pkg.config.posts;
 
 var connexion = function( oRequest, oResponse ) {
     if( oRequest.session.connected ) {
@@ -36,10 +37,33 @@ var login = function( oRequest, oResponse ) {
     } );
 }; // login
 
+var listPosts = function( oRequest, oResponse ) {
+    var aPostsFiles = fs.readdirSync( sPostsPath ),
+        aPosts = [],
+        iNow = ( new Date() ).getTime(),
+        i, sPostFile, oPost, dPostDate, iPostDate;
+    if( !oRequest.session.connected ) {
+        return oResponse.redirect( "/admin" );
+    }
+    aPostsFiles.sort().reverse();
+    for( i = -1; sPostFile = aPostsFiles[ ++i ]; ) {
+        oPost = require( sPostsPath + sPostFile );
+        iPostDate = ( dPostDate = new Date( oPost.date ) ).getTime();
+        oPost.file = sPostFile;
+        oPost.date = dPostDate.toUTCString();
+        oPost.published = ( iPostDate <= iNow );
+        aPosts.push( oPost );
+    }
+    oResponse.render( "admin/list", {
+        "pageTitle": "liste des billets",
+        "posts": aPosts
+    } );
+}; // listPosts
+
 exports.init = function( oApp ) {
     oApp.get( "/admin", connexion );
     oApp.post( "/admin", login );
-    // oApp.get( "/admin/list", listPosts );
+    oApp.get( "/admin/list", listPosts );
     // oApp.get( "/admin/add", addPost )
     // oApp.get( "/admin/edit/:file.json", editPost );
     // oApp.post( "/admin/save", savePost );

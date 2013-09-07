@@ -1,0 +1,13 @@
+extends ../layouts/admin
+
+block content
+    ul
+        - for( var i = -1, oPost; oPost = posts[ ++i ]; )
+            li( class= !oPost.published && "unpublished" )
+                div.infos
+                    strong= oPost.title
+                    time( datetime=oPost.date )= oPost.date
+                div.tools
+                    a( href="/admin/edit/" + oPost.file ) éditer
+                    a( href="/admin/delete/" + oPost.file ) supprimer
+
