@@ -10,7 +10,20 @@
 
 "use strict";
 
+var root = __dirname + "/..",
+    fs = require( "fs" ),
+    pkg = require( root + "/../package.json" );
+
 var homepage = function( oRequest, oResponse ) {
+    var sPostsPath = root + "/../" + pkg.config.posts,
+        aPostsFiles = fs.readdirSync( sPostsPath ),
+        aPosts = [],
+        i, sPostFile, oPost;
+    for( i = -1; sPostFile = aPostsFiles[ ++i ]; ) {
+        oPost = require( sPostsPath + sPostFile );
+        console.log( oPost );
+        aPosts.push( oPost );
+    }
     oResponse.render( "index", {
         "pageTitle": "ecto"
     } );

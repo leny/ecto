@@ -17,6 +17,13 @@ var root = __dirname,
     oApp = express();
 
 oApp.use( express.compress() );
+oApp.use( express.bodyParser() );
+oApp.use( express.cookieParser() );
+oApp.use( express.session( {
+    "secret": pkg.config.secret
+} ) );
+
+oApp.use( express.static( root + "/../client" ) );
 
 oApp.use( middlewares.log );
 
