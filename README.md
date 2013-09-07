@@ -39,12 +39,13 @@ L'interface de **rédaction de billet** sera un peu spéciale et comportera deux
 
 Pour la réalisation de ce projet, nous utiliserons les langages et *frameworks* suivants :
 
+Nos billets seront rédigés en [markdown](http://daringfireball.net/projects/markdown/).
+
 La *logique serveur* sera en **javascript**, via [node.js](http://nodejs.org).  
-Nous utiliserons le package [express](http://expressjs.com) pour le service et le routage, et utiliseront le langage [jade](http://jade-lang.com) pour les templates.
+Nous utiliserons le package [express](http://expressjs.com) pour le service et le routage, et les templates utiliseront le langage [jade](http://jade-lang.com).  
+Pour convertir les billets du format *markdown* vers *html*, nous utiliserons le package [markdown.js](http://github.com/evilstreak/markdown-js).
 
 Côté *client*, nous utiliserons [jQuery 2](http://jquery.com) pour nos scripts et [sass](http://sass-lang.com) pour nos feuilles de styles, avec l'aide du framework [bourbon](http://bourbon.io) et de son système de grille [neat](http://neat.bourbon.io).
-
-Nos billets seront rédigés en [markdown](http://daringfireball.net/projects/markdown/).
 
 #### Outils
 
