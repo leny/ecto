@@ -31,5 +31,6 @@ oApp.set( "views", root + "/views" );
 oApp.set( "view engine", "jade" );
 
 require( root + "/controllers/public.js" ).init( oApp );
+require( root + "/controllers/admin.js" ).init( oApp );
 
 oApp.listen( pkg.config.port );

@@ -1,0 +1,30 @@
+!!!
+html
+    head
+        meta( charset="utf-8" )/
+        title= "ecto > administration > " + pageTitle
+
+    body
+        #wrapper
+            header
+                h1
+                    a( href="/" ) ecto
+                h2= "administration > " + pageTitle
+
+            block navigation
+                nav
+                    | nav menu if connected
+
+            block content
+
+            footer
+                p
+                    | Ce blog utilise le moteur
+                    = " "
+                    a( href="http://github.com/leny/ecto" ) ecto
+                    = " - "
+                    a( href="/" ) (public
+                    = " - "
+                    a( href="/admin" ) admin)
+
+        block scripts
