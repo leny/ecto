@@ -18,11 +18,14 @@ var homepage = function( oRequest, oResponse ) {
     var sPostsPath = root + "/../" + pkg.config.posts,
         aPostsFiles = fs.readdirSync( sPostsPath ),
         aPosts = [],
-        i, sPostFile, oPost;
+        iNow = ( new Date() ).getTime(),
+        i, sPostFile, oPost, iPostDate;
     for( i = -1; sPostFile = aPostsFiles[ ++i ]; ) {
         oPost = require( sPostsPath + sPostFile );
-        console.log( oPost );
-        aPosts.push( oPost );
+        iPostDate = ( new Date( oPost.date ) ).getTime();
+        if( iPostDate <= iNow ) {
+            aPosts.push( oPost );
+        }
     }
     oResponse.render( "public/list", {
         "pageTitle": "ecto",
