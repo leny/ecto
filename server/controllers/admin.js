@@ -16,6 +16,13 @@ var root = __dirname + "/..",
     pkg = require( root + "/../package.json" ),
     sPostsPath = root + "/../" + pkg.config.posts;
 
+var adminMiddleware = function( oRequest, oResponse, fNext ) {
+    if( !oRequest.session.connected ) {
+        return oResponse.redirect( "/admin" );
+    }
+    fNext();
+}; // adminMiddleware
+
 var connexion = function( oRequest, oResponse ) {
     if( oRequest.session.connected ) {
         return oResponse.redirect( "/admin/list" );
@@ -42,9 +49,6 @@ var listPosts = function( oRequest, oResponse ) {
         aPosts = [],
         iNow = ( new Date() ).getTime(),
         i, sPostFile, oPost, dPostDate, iPostDate;
-    if( !oRequest.session.connected ) {
-        return oResponse.redirect( "/admin" );
-    }
     aPostsFiles.sort().reverse();
     for( i = -1; sPostFile = aPostsFiles[ ++i ]; ) {
         oPost = require( sPostsPath + sPostFile );
@@ -71,8 +75,8 @@ var addPost = function( oRequest, oResponse ) {
 exports.init = function( oApp ) {
     oApp.get( "/admin", connexion );
     oApp.post( "/admin", login );
-    oApp.get( "/admin/list", listPosts );
-    // oApp.get( "/admin/add", addPost )
+    oApp.get( "/admin/list", adminMiddleware, listPosts );
+    oApp.get( "/admin/add", adminMiddleware, addPost );
     // oApp.get( "/admin/edit/:file.json", editPost );
     // oApp.post( "/admin/save", savePost );
     // oApp.get( "/admin/delete/:file.json", deletePost );
