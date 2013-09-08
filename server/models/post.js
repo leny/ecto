@@ -53,7 +53,7 @@ var Post = function( sFileName, fNext ) {
         return _sFilePath;
     } );
 
-    if( sFileName ) {
+    if( sFileName && fNext ) {
         this.load( fNext );
     }
 };
@@ -62,13 +62,12 @@ var Post = function( sFileName, fNext ) {
 Post.genUUID = function() {
     var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".split( "" ),
         uuid = [],
-        rnd = Math.random(),
         r, i;
     uuid[ 8 ] = uuid[ 13 ] = uuid[ 18 ] = uuid[ 23 ] = "-";
     uuid[ 14 ] = "4";
     for( i = 0; i < 36; i++ ) {
         if( !uuid[ i ] ) {
-            r = 0 | rnd()*16;
+            r = 0 | Math.random() * 16;
             uuid[ i ] = chars[ ( i === 19 ) ? ( r & 0x3 ) | 0x8 : r & 0xf ];
         }
     }
