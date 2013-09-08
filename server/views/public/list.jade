@@ -7,6 +7,6 @@ block content
         ul
             - for( var i = -1, oPost; oPost = posts[ ++i ]; )
                 li
-                    a( href="/" + oPost.url )
+                    a( href= oPost.url )
                         strong= oPost.title
                         time( datetime=oPost.date )= oPost.date

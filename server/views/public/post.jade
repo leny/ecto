@@ -1,16 +1,16 @@
 extends ../layouts/public
 
 block title
-    title= pageTitle + " > " + article.title
+    title= pageTitle + " > " + post.title
 
 block content
     article
         header
-            h2= article.title
-            time( datetime=article.date )= article.date
+            h2= post.title
+            time( datetime=post.date )= post.date
 
         div.content
-            != article.content
+            != post.markdown
 
         footer
             p

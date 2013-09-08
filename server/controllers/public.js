@@ -11,53 +11,54 @@
 "use strict";
 
 var root = __dirname + "/..",
-    fs = require( "fs" ),
-    markdown = require( "markdown" ).markdown,
+    FS = require( "fs" ),
+    Post = require( root + "/models/post.js" ),
     pkg = require( root + "/../package.json" ),
     sPostsPath = root + "/../" + pkg.config.posts;
 
 var homepage = function( oRequest, oResponse ) {
-    var aPostsFiles = fs.readdirSync( sPostsPath ),
-        aPosts = [],
-        iNow = ( new Date() ).getTime(),
-        i, sPostFile, oPost, dPostDate, iPostDate;
-    aPostsFiles.sort().reverse();
-    for( i = -1; sPostFile = aPostsFiles[ ++i ]; ) {
-        oPost = JSON.parse( fs.readFileSync( sPostsPath + sPostFile, { "encoding" : "utf8" } ) );
-        iPostDate = ( dPostDate = new Date( oPost.date ) ).getTime();
-        if( iPostDate <= iNow ) {
-            oPost.url = sPostFile.replace( ".json", "" ) + "-" + oPost.title.toLowerCase().replace( /[^a-z0-9]+/g, "-" ) + ".html";
-            oPost.date = dPostDate.toUTCString();
-            aPosts.push( oPost );
+    FS.readdir( sPostsPath, function( oError, aFiles ) {
+        var sPostFile, i,
+            iFilesLoaded = 0,
+            aPosts = [],
+            iNow = ( new Date() ).getTime(),
+            fFileLoaded = function( oError, oPost ) {
+                if( !oError && oPost.date.getTime() <= iNow ) {
+                    aPosts.push( oPost );
+                }
+                if( ++iFilesLoaded === aFiles.length ) {
+                    aPosts.sort( Post.compareDates ).reverse();
+                    oResponse.render( "public/list", {
+                        "pageTitle": "ecto",
+                        "posts": aPosts
+                    } );
+                }
+            };
+        if( oError ) {
+            return oResponse.send( 500, oError );
         }
-    }
-    oResponse.render( "public/list", {
-        "pageTitle": "ecto",
-        "posts": aPosts
+        for( i = -1; sPostFile = aFiles[ ++i ]; ) {
+            new Post( sPostFile, fFileLoaded );
+        }
     } );
 }; // homepage
 
 var article = function( oRequest, oResponse ) {
-    var sPostFile = sPostsPath + oRequest.params.date + ".json",
-        iNow = ( new Date() ).getTime(),
-        oPost, dPostDate, iPostDate;
-    if( !fs.existsSync( sPostFile ) ) {
-        return oResponse.send( 404 );
-    }
-    oPost = JSON.parse( fs.readFileSync( sPostsPath + sPostFile, { "encoding" : "utf8" } ) );
-    iPostDate = ( dPostDate = new Date( oPost.date ) ).getTime();
-    if( iPostDate > iNow ) {
-        return oResponse.send( 403 );
-    }
-    oPost.date = dPostDate.toUTCString();
-    oPost.content = markdown.toHTML( oPost.content );
-    oResponse.render( "public/article", {
-        "pageTitle": "ecto",
-        "article": oPost
+    Post.getByURL( oRequest.path, function( oError, oPost ) {
+        if( oError ) {
+            return oResponse.send( 404 );
+        }
+        if( oPost.date.getTime() > ( new Date() ).getTime() ) {
+            return oResponse.send( 403 );
+        }
+        oResponse.render( "public/post", {
+            "pageTitle": "ecto",
+            "post": oPost
+        } );
     } );
 }; // article
 
 exports.init = function( oApp ) {
     oApp.get( "/", homepage );
-    oApp.get( "/:date-:name.html", article );
+    oApp.get( "/:name", article );
 };
