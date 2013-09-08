@@ -26,7 +26,7 @@ var homepage = function( oRequest, oResponse ) {
 }; // homepage
 
 var article = function( oRequest, oResponse ) {
-    Post.getByURL( oRequest.path, function( oError, oPost ) {
+    Post.getByURL( "/" + oRequest.params.name, function( oError, oPost ) {
         if( oError ) {
             return oResponse.send( 404 );
         }

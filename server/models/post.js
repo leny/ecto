@@ -17,7 +17,8 @@ var root = __dirname + "/..",
     sPostsPath = root + "/../" + pkg.config.posts;
 
 var Post = function( sFileName, fNext ) {
-    var _sFilePath = sPostsPath + ( sFileName || ( Post.genUUID() + ".json" ) ),
+    var _sFileName = sFileName || ( Post.genUUID() + ".json" ),
+        _sFilePath = sPostsPath + _sFileName,
         _sTitle = "Untitled post",
         _dDate = new Date(),
         _sContent = "";
@@ -49,8 +50,12 @@ var Post = function( sFileName, fNext ) {
         return Markdown.toHTML( _sContent );
     } );
 
-    this.__defineGetter__( "file", function() {
+    this.__defineGetter__( "path", function() {
         return _sFilePath;
+    } );
+
+    this.__defineGetter__( "file", function() {
+        return _sFileName;
     } );
 
     if( sFileName && fNext ) {
@@ -130,11 +135,11 @@ Post.getByURL = function( sURL, fNext ) {
 
 Post.prototype.load = function( fNext ) {
     var _that = this;
-    FS.exists( _that.file, function( bExists ) {
+    FS.exists( _that.path, function( bExists ) {
         if( !bExists ) {
-            return fNext && fNext( new Error( _that.file + " doesn't exists !" ) );
+            return fNext && fNext( new Error( _that.path + " doesn't exists !" ) );
         }
-        FS.readFile( _that.file, { "encoding" : "utf8" }, function( oError, sRawContent ) {
+        FS.readFile( _that.path, { "encoding" : "utf8" }, function( oError, sRawContent ) {
             var oPost;
             if( oError ) {
                 return fNext && fNext( oError );
@@ -155,21 +160,33 @@ Post.prototype.save = function( fNext ) {
             "date": _that.date.getTime(),
             "content": _that.content
         };
-    FS.writeFile( _that.file, JSON.stringify( oRawData ), function( oError ) {
+    FS.writeFile( _that.path, JSON.stringify( oRawData ), function( oError ) {
         return fNext && fNext( oError );
     } );
 };
 
-Post.prototype.delete = function( fNext ) {
+Post.prototype.destroy = function( fNext ) {
     var _that = this;
-    FS.exists( _that.file, function( bExists ) {
+    FS.exists( _that.path, function( bExists ) {
         if( !bExists ) {
-            return fNext && fNext( new Error( _that.file + " doesn't exists !" ) );
+            return fNext && fNext( new Error( _that.path + " doesn't exists !" ) );
         }
-        FS.unlink( _that.file, function( oError ) {
+        FS.unlink( _that.path, function( oError ) {
             return fNext && fNext( oError );
         } );
     } );
+};
+
+Post.prototype.getDate = function() {
+    var _iMonth, _iDate,
+        dDate = this.date;
+    return dDate.getFullYear() + "-" + ( ( _iMonth = dDate.getMonth() ) < 9 ? "0" + ( ++_iMonth ) : ++_iMonth ) + "-" + ( ( _iDate = dDate.getMonth() ) < 9 ? "0" + _iDate : _iDate );
+};
+
+Post.prototype.getTime = function() {
+    var _iHours, _iMinutes,
+        dDate = this.date;
+    return ( ( _iHours = dDate.getHours() ) < 9 ? "0" + ( ++_iHours ) : ++_iHours ) + ":" + ( ( _iMinutes = dDate.getMinutes() ) < 9 ? "0" + ( ++_iMinutes ) : _iMinutes );
 };
 
 module.exports = Post;

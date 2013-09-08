@@ -11,17 +11,18 @@
 "use strict";
 
 var root = __dirname + "/..",
-    fs = require( "fs" ),
-    crypto = require( "crypto" ),
-    markdown = require( "markdown" ).markdown,
-    pkg = require( root + "/../package.json" ),
-    sPostsPath = root + "/../" + pkg.config.posts;
+    Crypto = require( "crypto" ),
+    Post = require( root + "/models/post.js" ),
+    pkg = require( root + "/../package.json" );
 
 var adminMiddleware = function( oRequest, oResponse, fNext ) {
+    /**/ return fNext();
+    /*
     if( !oRequest.session.connected ) {
         return oResponse.redirect( "/admin" );
     }
     fNext();
+    */
 }; // adminMiddleware
 
 var connexion = function( oRequest, oResponse ) {
@@ -35,7 +36,7 @@ var connexion = function( oRequest, oResponse ) {
 }; // connexion
 
 var login = function( oRequest, oResponse ) {
-    if( pkg.config.users[ oRequest.body.login ] === ( ( crypto.createHash( "sha1" ) ).update( oRequest.body.pass.trim() ) ).digest( "hex" ) ) {
+    if( pkg.config.users[ oRequest.body.login ] === ( ( Crypto.createHash( "sha1" ) ).update( oRequest.body.pass.trim() ) ).digest( "hex" ) ) {
         oRequest.session.connected = true;
         return oResponse.redirect( "/admin/list" );
     }
@@ -46,22 +47,14 @@ var login = function( oRequest, oResponse ) {
 }; // login
 
 var listPosts = function( oRequest, oResponse ) {
-    var aPostsFiles = fs.readdirSync( sPostsPath ),
-        aPosts = [],
-        iNow = ( new Date() ).getTime(),
-        i, sPostFile, oPost, dPostDate, iPostDate;
-    aPostsFiles.sort().reverse();
-    for( i = -1; sPostFile = aPostsFiles[ ++i ]; ) {
-        oPost = JSON.parse( fs.readFileSync( sPostsPath + sPostFile, { "encoding" : "utf8" } ) );
-        iPostDate = ( dPostDate = new Date( oPost.date ) ).getTime();
-        oPost.file = sPostFile;
-        oPost.date = dPostDate.toUTCString();
-        oPost.published = ( iPostDate <= iNow );
-        aPosts.push( oPost );
-    }
-    oResponse.render( "admin/list", {
-        "pageTitle": "liste des billets",
-        "posts": aPosts
+    Post.loadAll( false, function( oError, aPosts ) {
+        if( oError ) {
+            return oResponse.send( 500 );
+        }
+        oResponse.render( "admin/list", {
+            "pageTitle": "liste des billets",
+            "posts": aPosts
+        } );
     } );
 }; // listPosts
 
@@ -74,44 +67,25 @@ var addPost = function( oRequest, oResponse ) {
 }; // addPost
 
 var editPost = function( oRequest, oResponse ) {
-    var sFileName = oRequest.params.file + ".json",
-        sFilePath = sPostsPath + sFileName,
-        aPostDateElements, oPost;
-    if( !fs.existsSync( sFilePath ) ) {
-        return oResponse.send( 404 );
-    }
-    oPost = JSON.parse( fs.readFileSync( sFilePath, { "encoding" : "utf8" } ) );
-    aPostDateElements = oPost.date.split( " " );
-    oResponse.render( "admin/edit", {
-        "pageTitle": "éditer un billet",
-        "post": {
-            "file": sFileName,
-            "title": oPost.title,
-            "date": aPostDateElements[ 0 ],
-            "time": aPostDateElements[ 1 ],
-            "content": oPost.content,
-            "formatted_content": markdown.toHTML( oPost.content )
-        },
-        "error": false
+    Post.getByURL( "/" + oRequest.params.name, function( oError, oPost ) {
+        if( oError ) {
+            return oResponse.send( 404 );
+        }
+        oResponse.render( "admin/edit", {
+            "pageTitle": "éditer un billet",
+            "post": oPost,
+            "error": false
+        } );
     } );
 }; // editPost
 
 var savePost = function( oRequest, oResponse ) {
-    var _month, _day, _hours, _minutes, oPostObject, sFileName, sFilePath,
-        dNow = new Date(),
-        iNowYear = dNow.getFullYear(),
-        sNowMonth = ( _month = dNow.getMonth() ) < 9 ? ++_month : "0" + ( ++_month ),
-        sNowDay = ( _day = dNow.getDate() ) < 10 ? _day : "0" + _day,
-        sNowHours = ( _hours = ( dNow.getHours() ) ) < 10 ? ++_hours : "0" + ( ++_hours ),
-        sNowMinutes = ( _minutes = ( dNow.getMinutes() ) ) < 10 ? ++_minutes : "0" + ( ++_minutes );
-    oPostObject = {
-        "title": oRequest.body.title || "Untitled post",
-        "date": ( oRequest.body.date || iNowYear + "-" + sNowMonth + "-" + sNowDay ) + " " + ( oRequest.body.time || sNowHours + ":" + sNowMinutes ),
-        "content": oRequest.body.content
-    };
-    sFileName = oPostObject.date.replace( /([\s:-]?)/g, "" ) + ".json";
-    sFilePath = sPostsPath + sFileName;
-    fs.writeFile( sFilePath, JSON.stringify( oPostObject ), function( oError ) {
+    var oPost;
+    oPost = new Post( oRequest.body.file.trim() );
+    oPost.title = oRequest.body.title.trim() || "Untitled post";
+    oPost.date = new Date( oRequest.body.date + " " + oRequest.body.time );
+    oPost.content = oRequest.body.content.trim();
+    oPost.save( function( oError ) {
         if( oError ) {
             return oResponse.render( "admin/edit", {
                 "pageTitle": !!oRequest.body.file ? "éditer un billet" : "ajouter un billet",
@@ -124,50 +98,40 @@ var savePost = function( oRequest, oResponse ) {
                 "error": true
             } );
         }
-        if( !!oRequest.body.file !== sFileName ) {
-            fs.unlinkSync( sPostsPath + oRequest.body.file );
-        }
         oResponse.redirect( "/admin/list" );
     } );
 }; // savePost
 
 var askDeletePost = function( oRequest, oResponse ) {
-    var sFileName = oRequest.params.file + ".json",
-        sFilePath = sPostsPath + sFileName,
-        oPost;
-    if( !fs.existsSync( sFilePath ) ) {
-        return oResponse.send( 404 );
-    }
-    oPost = JSON.parse( fs.readFileSync( sFilePath, { "encoding" : "utf8" } ) );
-    oResponse.render( "admin/delete", {
-        "pageTitle": "supprimer un billet",
-        "post": {
-            "file": sFileName,
-            "title": oPost.title
-        },
-        "error": false
+    Post.getByURL( "/" + oRequest.params.name, function( oError, oPost ) {
+        if( oError ) {
+            return oResponse.send( 404 );
+        }
+        oResponse.render( "admin/delete", {
+            "pageTitle": "supprimer un billet",
+            "post": oPost,
+            "error": false
+        } );
     } );
 }; // askDeletePost
 
 var deletePost = function( oRequest, oResponse ) {
-    var sFilePath = sPostsPath + oRequest.body.file;
+    var oPost;
     if( oRequest.body.action === "confirm" ) {
-        if( !fs.existsSync( sFilePath ) ) {
-            return oResponse.send( 404 );
-        }
-        fs.unlink( sFilePath, function( oError ) {
+        oPost = new Post( oRequest.body.file.trim(), function( oError ) {
             if( oError ) {
-                oPost = JSON.parse( fs.readFileSync( sFilePath, { "encoding" : "utf8" } ) );
-                return oResponse.render( "admin/delete", {
-                    "pageTitle": "supprimer un billet",
-                    "post": {
-                        "file": sFileName,
-                        "title": oPost.title
-                    },
-                    "error": true
-                } );
+                return oResponse.send( 404 );
             }
-            oResponse.redirect( "/admin/list" );
+            oPost.destroy( function( oError ) {
+                if( oError ) {
+                    return oResponse.render( "admin/delete", {
+                        "pageTitle": "supprimer un billet",
+                        "post": oPost,
+                        "error": true
+                    } );
+                }
+                oResponse.redirect( "/admin/list" );
+            } );
         } );
     } else {
         oResponse.redirect( "/admin/list" );
@@ -185,9 +149,9 @@ exports.init = function( oApp ) {
     oApp.post( "/admin", login );
     oApp.get( "/admin/list", adminMiddleware, listPosts );
     oApp.get( "/admin/add", adminMiddleware, addPost );
-    oApp.get( "/admin/edit/:file.json", adminMiddleware, editPost );
+    oApp.get( "/admin/edit/:name", adminMiddleware, editPost );
     oApp.post( "/admin/save", adminMiddleware, savePost );
-    oApp.get( "/admin/delete/:file.json", adminMiddleware, askDeletePost );
+    oApp.get( "/admin/delete/:name", adminMiddleware, askDeletePost );
     oApp.post( "/admin/delete", adminMiddleware, deletePost );
     oApp.get( "/admin/exit", adminMiddleware, logout );
 };

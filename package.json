@@ -1,6 +1,6 @@
 {
     "name": "ecto",
-    "version": "0.0.1-77",
+    "version": "0.0.1-103",
     "private": false,
     "description": "Simple/fast node.js blogging system.",
     "author": {

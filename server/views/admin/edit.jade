@@ -11,15 +11,15 @@ block content
 
             div.form-elt
                 label( for="date" ) Date de publication :
-                input#date( name="date", type="date", required, value=( post.date || false ) )/
-                input#time( name="time", type="time", required, value=( post.time || false ) )/
+                input#date( name="date", type="date", required, value=( post.getDate() || false ) )/
+                input#time( name="time", type="time", required, value=( post.getTime() || false ) )/
 
             div.article-redactor
                 div.form-elt
                     label( for="content" ) Content :
                     textarea#content( name="content", rows=20, cols=30, required )= post.content
                 div.preview
-                    != post.formatted_content
+                    != post.markdown
 
             if( error )
                 div.error
