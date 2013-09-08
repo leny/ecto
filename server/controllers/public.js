@@ -20,6 +20,7 @@ var homepage = function( oRequest, oResponse ) {
         }
         oResponse.render( "public/list", {
             "pageTitle": "ecto",
+            "mode": "list",
             "posts": aPosts
         } );
     } );
@@ -27,7 +28,7 @@ var homepage = function( oRequest, oResponse ) {
 
 var article = function( oRequest, oResponse ) {
     Post.getByURL( "/" + oRequest.params.name, function( oError, oPost ) {
-        if( oError ) {
+        if( oError || !oPost ) {
             return oResponse.send( 404 );
         }
         if( oPost.date.getTime() > ( new Date() ).getTime() ) {
@@ -35,6 +36,7 @@ var article = function( oRequest, oResponse ) {
         }
         oResponse.render( "public/post", {
             "pageTitle": "ecto",
+            "mode": "article",
             "post": oPost
         } );
     } );

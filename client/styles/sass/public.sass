@@ -1,0 +1,209 @@
+/* ecto
+ * Simple/fast node.js blogging system.
+ *
+ * SASS Document - /client/styles/sass/public.sass
+ * -> target: /client/styles/public.css
+ * Public stylesheet
+ *
+ * Using Bourbon (http://bourbon.io) & Bourbon Neat (http://neat.bourbon.io)
+ *
+ * coded by leny
+ * started at 08/09/13
+ */
+
+@import bourbon
+@import neat
+
+@import libs/normalize
+
++font-face( OpenSans, "fonts/OpenSans-Regular-webfont" )
++font-face( OpenSans, "fonts/OpenSans-Italic-webfont", normal, italic )
++font-face( OpenSans, "fonts/OpenSans-Bold-webfont", bold )
++font-face( OpenSans, "fonts/OpenSans-BoldItalic-webfont", bold, italic )
+
+// colors taken from http://designmodo.github.io/Flat-UI/
+$turquoise: #1ABC9C
+$green_sea: #16A085
+$emerald: #2ECC71
+$nephritis: #27AE60
+$peter_river: #3498DB
+$belize_hole: #2980B9
+$wisteria: #8E44AD
+$midnight_blue: #2C3E50
+$pumpkin: #D35400
+$alizarin: #E74C3C
+$pomegranate: #C0392B
+$clouds: #ECF0F1
+
+*
+    font-smooth: always
+    -webkit-font-smoothing: antialiased
+
+a
+    color: $belize_hole
+    text-decoration: none
+    +transition( color, .5s, ease-in-out )
+    &:hover
+        color: $peter_river
+    &:visited
+        color: $wisteria
+
+html
+    font: normal 62.5% OpenSans, $verdana
+    color: $midnight_blue
+
+body
+    position: relative
+    padding: 2rem 0 0
+    font-size: 1.2rem
+    &.list
+        #wrapper > header
+            h1
+                a
+                    color: $green_sea
+        #wrapper > aside
+            h2
+                color: $green_sea
+            p
+                color: $green_sea
+        &:before
+            $size: 120rem
+            content: ""
+            position: fixed
+            display: block
+            width: $size
+            height: $size
+            top: $size / -2
+            left: $size / -2
+            z-index: 0
+            background: $green_sea
+            +transform( rotate( -45deg ) )
+    &.article
+        #wrapper > header
+            h1
+                a
+                    color: $pumpkin
+        #wrapper > aside
+            h2
+                color: $pumpkin
+            p
+                color: $pumpkin
+        &:before
+            $size: 120rem
+            content: ""
+            position: fixed
+            display: block
+            width: $size
+            height: $size
+            top: $size / -2
+            right: $size / -2
+            z-index: 0
+            background: $pumpkin
+            +transform( rotate( -45deg ) )
+        &:after
+            $size: 175rem
+            content: ""
+            position: fixed
+            display: block
+            width: $size
+            height: $size
+            bottom: $size / -2
+            right: $size / -2
+            z-index: 0
+            background: $pumpkin
+            +transform( rotate( -45deg ) )
+
+#wrapper
+    position: relative
+    +outer-container
+    z-index: 10
+    section, article
+        +span-columns( 9 )
+    aside
+        +span-columns( 3 )
+        +omega
+    footer
+        +span-columns( 12 )
+
+#wrapper > header
+    h1
+        position: relative
+        padding: 0.5rem 2rem
+        background: white
+        font-size: 5rem
+        a
+            text-decoration: none
+
+#wrapper > section
+    h2
+        margin-bottom: 3rem
+        padding: 0.5rem 2rem
+        background: white
+        font-size: 2.5rem
+        color: $turquoise
+    ul
+        margin: 0 0 5rem
+        padding: 0
+        list-style: inside none
+        li
+            margin: 0 0 1rem
+            a
+                display: block
+                padding: 0.5rem 2rem 0.65rem
+                +linear-gradient( 90deg, white, white )
+                color: $turquoise
+                text-decoration: none
+                +transition( all 0.5s $ease-in-out-back )
+                strong
+                    display: block
+                    font-size: 1.5rem
+                    color: $nephritis
+                span
+                    display: block
+                    color: $emerald
+                &:hover
+                    margin: 0 0 0 5rem
+                    +linear-gradient( 90deg, $clouds 0%, white 50% )
+                    border-radius: 100px 0 0 100px
+                    strong
+                        color: $pomegranate
+                    span
+                        color: $alizarin
+
+#wrapper > article
+    position: relative
+    header, div.content, footer
+        margin: 0 0 2rem
+        padding: 0.5rem 2rem
+        background: white
+    header
+        color: $pumpkin
+        h2
+            font-size: 2.5rem
+    div.content
+        hr
+            height: 1px
+            background: $pumpkin
+            border: 0
+    footer
+        a
+            font: bold 1.4rem OpenSans
+            color: $pumpkin
+            &:before
+                content: "< "
+
+#wrapper > aside
+    position: relative
+    padding: 0.5rem 2rem
+    background: white
+    h2
+        color: $green_sea
+    p
+        color: $green_sea
+
+#wrapper > footer
+    p
+        position: relative
+        padding: 0.5rem 2rem
+        background: white
+        font-size: 1.1rem
