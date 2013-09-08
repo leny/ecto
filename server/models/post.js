@@ -88,14 +88,14 @@ Post.getByURL = function( sURL, fNext ) {
                 ++iFilesLoaded;
                 if( !oError && !bFounded && oPost.url === sURL ) {
                     bFounded = true;
-                    return fNext( null, oPost );
+                    return fNext && fNext( null, oPost );
                 }
                 if( iFilesLoaded === aFiles.length && !bFounded ) {
-                    return fNext();
+                    return fNext && fNext();
                 }
             };
         if( oError ) {
-            return fNext( oError );
+            return fNext && fNext( oError );
         }
         for( i = -1; sPostFile = aFiles[ ++i ]; ) {
             new Post( sPostFile, fFileLoaded );
