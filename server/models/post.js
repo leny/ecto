@@ -79,6 +79,30 @@ Post.compareDates = function( a, b ) {
     return a.date.getTime() - b.date.getTime();
 };
 
+Post.loadAll = function( bFilter, fNext ) {
+    FS.readdir( sPostsPath, function( oError, aFiles ) {
+        var sPostFile, i,
+            iFilesLoaded = 0,
+            aPosts = [],
+            iNow = ( new Date() ).getTime(),
+            fFileLoaded = function( oError, oPost ) {
+                if( !oError && bFilter && oPost.date.getTime() <= iNow ) {
+                    aPosts.push( oPost );
+                }
+                if( ++iFilesLoaded === aFiles.length ) {
+                    aPosts.sort( Post.compareDates ).reverse();
+                    return fNext && fNext( null, aPosts );
+                }
+            };
+        if( oError ) {
+            return fNext && fNext( oError );
+        }
+        for( i = -1; sPostFile = aFiles[ ++i ]; ) {
+            new Post( sPostFile, fFileLoaded );
+        }
+    } );
+};
+
 Post.getByURL = function( sURL, fNext ) {
     FS.readdir( sPostsPath, function( oError, aFiles ) {
         var sPostFile, i,

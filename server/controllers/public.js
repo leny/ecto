@@ -11,35 +11,17 @@
 "use strict";
 
 var root = __dirname + "/..",
-    FS = require( "fs" ),
-    Post = require( root + "/models/post.js" ),
-    pkg = require( root + "/../package.json" ),
-    sPostsPath = root + "/../" + pkg.config.posts;
+    Post = require( root + "/models/post.js" );
 
 var homepage = function( oRequest, oResponse ) {
-    FS.readdir( sPostsPath, function( oError, aFiles ) {
-        var sPostFile, i,
-            iFilesLoaded = 0,
-            aPosts = [],
-            iNow = ( new Date() ).getTime(),
-            fFileLoaded = function( oError, oPost ) {
-                if( !oError && oPost.date.getTime() <= iNow ) {
-                    aPosts.push( oPost );
-                }
-                if( ++iFilesLoaded === aFiles.length ) {
-                    aPosts.sort( Post.compareDates ).reverse();
-                    oResponse.render( "public/list", {
-                        "pageTitle": "ecto",
-                        "posts": aPosts
-                    } );
-                }
-            };
+    Post.loadAll( true, function( oError, aPosts ) {
         if( oError ) {
-            return oResponse.send( 500, oError );
+            return oResponse.send( 500 );
         }
-        for( i = -1; sPostFile = aFiles[ ++i ]; ) {
-            new Post( sPostFile, fFileLoaded );
-        }
+        oResponse.render( "public/list", {
+            "pageTitle": "ecto",
+            "posts": aPosts
+        } );
     } );
 }; // homepage
 
