@@ -86,8 +86,10 @@ Post.loadAll = function( bFilter, fNext ) {
             aPosts = [],
             iNow = ( new Date() ).getTime(),
             fFileLoaded = function( oError, oPost ) {
-                if( !oError && bFilter && oPost.date.getTime() <= iNow ) {
-                    aPosts.push( oPost );
+                if( !oError ) {
+                    if( !bFilter || bFilter && oPost.date.getTime() <= iNow ) {
+                        aPosts.push( oPost );
+                    }
                 }
                 if( ++iFilesLoaded === aFiles.length ) {
                     aPosts.sort( Post.compareDates ).reverse();
