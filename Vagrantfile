@@ -31,7 +31,7 @@ echo "server {
   listen 80;
   listen [::]:80 ipv6only=on default_server;
 
-  access_log /var/log/nginx/dice-messenger.lan;
+  access_log /var/log/nginx/blog.ecto.lan;
 
   location / {
     proxy_pass http://127.0.0.1:50001;
