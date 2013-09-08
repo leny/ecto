@@ -1,7 +1,7 @@
 /* ecto
  * Simple/fast node.js blogging system.
  *
- * JS Document - /src/controllers/public.js
+ * JS Document - /server/controllers/public.js
  * Controllers/router for public pages
  *
  * coded by leny

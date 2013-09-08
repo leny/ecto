@@ -1,7 +1,7 @@
 /* ecto
  * Simple/fast node.js blogging system.
  *
- * JS Document - /src/models/post.js
+ * JS Document - /server/models/post.js
  * Model for post
  *
  * coded by leny

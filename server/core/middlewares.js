@@ -1,7 +1,7 @@
 /* ecto
  * Simple/fast node.js blogging system.
  *
- * JS Document - /src/core/middlewares.js
+ * JS Document - /server/core/middlewares.js
  * Express Middlewares
  *
  * coded by leny
