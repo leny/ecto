@@ -266,11 +266,11 @@ body.list #wrapper > aside p {
 body.list:before {
   content: "";
   position: fixed;
+  top: -60rem;
+  left: -60rem;
   display: block;
   width: 120rem;
   height: 120rem;
-  top: -60rem;
-  left: -60rem;
   z-index: 0;
   background: #16a085;
   -webkit-transform: rotate(-45deg);
@@ -291,11 +291,11 @@ body.article #wrapper > aside p {
 body.article:before {
   content: "";
   position: fixed;
+  top: -60rem;
+  left: -60rem;
   display: block;
   width: 120rem;
   height: 120rem;
-  top: -60rem;
-  right: -60rem;
   z-index: 0;
   background: #d35400;
   -webkit-transform: rotate(-45deg);
@@ -307,11 +307,11 @@ body.article:before {
 body.article:after {
   content: "";
   position: fixed;
+  right: -87.5rem;
+  bottom: -87.5rem;
   display: block;
   width: 175rem;
   height: 175rem;
-  bottom: -87.5rem;
-  right: -87.5rem;
   z-index: 0;
   background: #d35400;
   -webkit-transform: rotate(-45deg);

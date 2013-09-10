@@ -71,12 +71,10 @@ body
         &:before
             $size: 120rem
             content: ""
-            position: fixed
+            +position( fixed, ( $size / -2 ) 0 0 ( $size / -2 ) )
             display: block
             width: $size
             height: $size
-            top: $size / -2
-            left: $size / -2
             z-index: 0
             background: $green_sea
             +transform( rotate( -45deg ) )
@@ -93,24 +91,20 @@ body
         &:before
             $size: 120rem
             content: ""
-            position: fixed
+            +position( fixed, ( $size / -2 ) 0 0 ( $size / -2 ) )
             display: block
             width: $size
             height: $size
-            top: $size / -2
-            right: $size / -2
             z-index: 0
             background: $pumpkin
             +transform( rotate( -45deg ) )
         &:after
             $size: 175rem
             content: ""
-            position: fixed
+            +position( fixed, 0 ( $size / -2 ) ( $size / -2 ) 0 )
             display: block
             width: $size
             height: $size
-            bottom: $size / -2
-            right: $size / -2
             z-index: 0
             background: $pumpkin
             +transform( rotate( -45deg ) )
