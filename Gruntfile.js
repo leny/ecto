@@ -13,6 +13,7 @@
 module.exports = function( grunt ) {
 
     grunt.initConfig( {
+        "pkg": grunt.file.readJSON( "package.json" ),
         "bumpup": "package.json",
         "concurrent": {
             "options": {
@@ -25,7 +26,8 @@ module.exports = function( grunt ) {
         },
         "jshint": {
             "files": [
-                "server/**/*.js"
+                "server/**/*.js",
+                "client/js/parts/**/*.js"
             ],
             "options": {
                 "boss": true,
@@ -47,6 +49,16 @@ module.exports = function( grunt ) {
                 "white": false
             }
         },
+        "uglify": {
+            "admin": {
+                "options": {
+                    "banner": "/* ecto\n * Simple/fast node.js blogging system.\n *\n * JS Document - /client/js/admin.min.js\n * Client Scripts for Admin\n *\n * coded by leny\n * started at 10/09/13\n * builded at <%= grunt.template.today('dd/mm/yyyy') %>\n */\n\n"
+                },
+                "files": {
+                    "client/js/admin.min.js": [ "client/js/libs/jquery.js", "client/js/parts/admin.js" ]
+                }
+            }
+        },
         "nodemon": {
             "server": {
                 "options": {
@@ -66,11 +78,13 @@ module.exports = function( grunt ) {
         "watch": {
             "files": [
                 "server/**/*.js",
-                "server/**/*.jade"
+                "server/**/*.jade",
+                "client/js/parts/**/*.js"
             ],
             "tasks": [
                 "clear",
                 "jshint",
+                "uglify",
                 "bumpup:build"
             ]
         }
@@ -80,12 +94,14 @@ module.exports = function( grunt ) {
     grunt.loadNpmTasks( "grunt-contrib-jshint" );
     grunt.loadNpmTasks( "grunt-bumpup" );
     grunt.loadNpmTasks( "grunt-contrib-watch" );
+    grunt.loadNpmTasks( "grunt-contrib-uglify" );
     grunt.loadNpmTasks( "grunt-nodemon" );
     grunt.loadNpmTasks( "grunt-concurrent" );
 
     grunt.registerTask( "default", [
         "clear",
         "jshint",
+        "uglify",
         "bumpup:build"
     ] );
 
@@ -101,18 +117,21 @@ module.exports = function( grunt ) {
     grunt.registerTask( "patch", [
         "clear",
         "jshint",
+        "uglify",
         "bumpup:patch"
     ] );
 
     grunt.registerTask( "minor", [
         "clear",
         "jshint",
+        "uglify",
         "bumpup:minor"
     ] );
 
     grunt.registerTask( "major", [
         "clear",
         "jshint",
+        "uglify",
         "bumpup:major"
     ] );
 
