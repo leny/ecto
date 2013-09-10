@@ -8,13 +8,17 @@
  * started at 10/09/13
  */
 
-/*global jQuery */
+/*global jQuery window */
 
 ( function( $ ) {
     "use strict";
 
+    var editArticle = function() {
+        window.location.href = $( this ).parent().find( ".tools a.edit" ).attr( "href" );
+    }; // editArticle
+
     $( function() {
-        console.log( "ecto admin." );
+        $( "body > section ul li .infos" ).on( "click", editArticle );
     } );
 
 } ).call( this, jQuery );
