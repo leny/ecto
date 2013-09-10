@@ -37,6 +37,11 @@ $alizarin: #E74C3C
 $pomegranate: #C0392B
 $clouds: #ECF0F1
 
+// breakpoints
+$bk-mobile: new-breakpoint( min-width 320px 6 )
+$bk-tablet: new-breakpoint( min-width 640px 9 )
+$bk-desktop: new-breakpoint( min-width 960px 12 )
+
 *
     font-smooth: always
     -webkit-font-smoothing: antialiased
@@ -91,7 +96,7 @@ body
         &:before
             $size: 120rem
             content: ""
-            +position( fixed, ( $size / -2 ) 0 0 ( $size / -2 ) )
+            +position( fixed, ( $size / -2 ) ( $size / -2 ) 0 0  )
             display: block
             width: $size
             height: $size
@@ -113,13 +118,33 @@ body
     position: relative
     +outer-container
     z-index: 10
-    section, article
-        +span-columns( 9 )
-    aside
-        +span-columns( 3 )
-        +omega
-    footer
-        +span-columns( 12 )
+
+    +media( $bk-mobile )
+        section, article
+            +span-columns( 6 )
+        aside
+            +span-columns( 6 )
+            +omega
+        footer
+            +span-columns( 6 )
+
+    +media( $bk-tablet )
+        section, article
+            +span-columns( 6 )
+        aside
+            +span-columns( 3 )
+            +omega
+        footer
+            +span-columns( 9 )
+
+    +media( $bk-desktop )
+        section, article
+            +span-columns( 9 )
+        aside
+            +span-columns( 3 )
+            +omega
+        footer
+            +span-columns( 12 )
 
 #wrapper > header
     h1

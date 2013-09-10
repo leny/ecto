@@ -292,7 +292,7 @@ body.article:before {
   content: "";
   position: fixed;
   top: -60rem;
-  left: -60rem;
+  right: -60rem;
   display: block;
   width: 120rem;
   height: 120rem;
@@ -336,33 +336,95 @@ body.article:after {
 #wrapper:after {
   clear: both;
 }
-#wrapper section, #wrapper article {
-  display: block;
-  float: left;
-  margin-right: 2.35765%;
-  width: 74.41059%;
+@media screen and (min-width: 320px) {
+  #wrapper section, #wrapper article {
+    display: block;
+    float: left;
+    margin-right: 4.82916%;
+    width: 100%;
+  }
+  #wrapper section:last-child, #wrapper article:last-child {
+    margin-right: 0;
+  }
+  #wrapper aside {
+    display: block;
+    float: left;
+    margin-right: 4.82916%;
+    width: 100%;
+    margin-right: 0;
+  }
+  #wrapper aside:last-child {
+    margin-right: 0;
+  }
+  #wrapper footer {
+    display: block;
+    float: left;
+    margin-right: 4.82916%;
+    width: 100%;
+  }
+  #wrapper footer:last-child {
+    margin-right: 0;
+  }
 }
-#wrapper section:last-child, #wrapper article:last-child {
-  margin-right: 0;
+@media screen and (min-width: 640px) {
+  #wrapper section, #wrapper article {
+    display: block;
+    float: left;
+    margin-right: 3.16844%;
+    width: 65.61052%;
+  }
+  #wrapper section:last-child, #wrapper article:last-child {
+    margin-right: 0;
+  }
+  #wrapper aside {
+    display: block;
+    float: left;
+    margin-right: 3.16844%;
+    width: 31.22104%;
+    margin-right: 0;
+  }
+  #wrapper aside:last-child {
+    margin-right: 0;
+  }
+  #wrapper footer {
+    display: block;
+    float: left;
+    margin-right: 3.16844%;
+    width: 100%;
+  }
+  #wrapper footer:last-child {
+    margin-right: 0;
+  }
 }
-#wrapper aside {
-  display: block;
-  float: left;
-  margin-right: 2.35765%;
-  width: 23.23176%;
-  margin-right: 0;
-}
-#wrapper aside:last-child {
-  margin-right: 0;
-}
-#wrapper footer {
-  display: block;
-  float: left;
-  margin-right: 2.35765%;
-  width: 100%;
-}
-#wrapper footer:last-child {
-  margin-right: 0;
+@media screen and (min-width: 960px) {
+  #wrapper section, #wrapper article {
+    display: block;
+    float: left;
+    margin-right: 2.35765%;
+    width: 74.41059%;
+  }
+  #wrapper section:last-child, #wrapper article:last-child {
+    margin-right: 0;
+  }
+  #wrapper aside {
+    display: block;
+    float: left;
+    margin-right: 2.35765%;
+    width: 23.23176%;
+    margin-right: 0;
+  }
+  #wrapper aside:last-child {
+    margin-right: 0;
+  }
+  #wrapper footer {
+    display: block;
+    float: left;
+    margin-right: 2.35765%;
+    width: 100%;
+  }
+  #wrapper footer:last-child {
+    margin-right: 0;
+  }
 }
 
 #wrapper > header h1 {
