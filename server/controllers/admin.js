@@ -16,13 +16,10 @@ var root = __dirname + "/..",
     pkg = require( root + "/../package.json" );
 
 var adminMiddleware = function( oRequest, oResponse, fNext ) {
-    /**/ return fNext();
-    /*
     if( !oRequest.session.connected ) {
         return oResponse.redirect( "/admin" );
     }
     fNext();
-    */
 }; // adminMiddleware
 
 var connexion = function( oRequest, oResponse ) {

@@ -1,0 +1,575 @@
+/* ecto
+ * Simple/fast node.js blogging system.
+ *
+ * SASS Document - /client/styles/sass/admin.sass
+ * -> target: /client/styles/admin.css
+ * Admin stylesheet
+ *
+ * Using Bourbon (http://bourbon.io) & Bourbon Neat (http://neat.bourbon.io)
+ *
+ * coded by leny
+ * started at 10/09/13
+ */
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box; }
+
+/*! normalize.css v2.1.3 | MIT License | git.io/normalize */
+article, aside, details, figcaption, figure, footer, header, hgroup, main, nav, section, summary {
+  display: block; }
+
+audio, canvas, video {
+  display: inline-block; }
+
+audio:not([controls]) {
+  display: none;
+  height: 0; }
+
+[hidden], template {
+  display: none; }
+
+html {
+  font-family: sans-serif;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0; }
+
+a {
+  background: transparent; }
+
+a:focus {
+  outline: thin dotted; }
+
+a:active, a:hover {
+  outline: 0; }
+
+h1 {
+  font-size: 2em;
+  margin: 0.67em 0; }
+
+abbr[title] {
+  border-bottom: 1px dotted; }
+
+b, strong {
+  font-weight: bold; }
+
+dfn {
+  font-style: italic; }
+
+hr {
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  height: 0; }
+
+mark {
+  background: yellow;
+  color: black; }
+
+code, kbd, pre, samp {
+  font-family: monospace, serif;
+  font-size: 1em; }
+
+pre {
+  white-space: pre-wrap; }
+
+q {
+  quotes: "\201C" "\201D" "\2018" "\2019"; }
+
+small {
+  font-size: 80%; }
+
+sub, sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline; }
+
+sup {
+  top: -0.5em; }
+
+sub {
+  bottom: -0.25em; }
+
+img {
+  border: 0; }
+
+svg:not(:root) {
+  overflow: hidden; }
+
+figure {
+  margin: 0; }
+
+fieldset {
+  border: 1px solid silver;
+  margin: 0 2px;
+  padding: 0.35em 0.625em 0.75em; }
+
+legend {
+  border: 0;
+  padding: 0; }
+
+button, input, select, textarea {
+  font-family: inherit;
+  font-size: 100%;
+  margin: 0; }
+
+button, input {
+  line-height: normal; }
+
+button, select {
+  text-transform: none; }
+
+button, html input[type="button"], input[type="reset"], input[type="submit"] {
+  -webkit-appearance: button;
+  cursor: pointer; }
+
+button[disabled], html input[disabled] {
+  cursor: default; }
+
+input[type="checkbox"], input[type="radio"] {
+  box-sizing: border-box;
+  padding: 0; }
+
+input[type="search"] {
+  -webkit-appearance: textfield;
+  -moz-box-sizing: content-box;
+  -webkit-box-sizing: content-box;
+  box-sizing: content-box; }
+
+input[type="search"]::-webkit-search-cancel-button, input[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none; }
+
+button::-moz-focus-inner, input::-moz-focus-inner {
+  border: 0;
+  padding: 0; }
+
+textarea {
+  overflow: auto;
+  vertical-align: top; }
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+@font-face {
+  font-family: OpenSans;
+  font-weight: normal;
+  font-style: normal;
+  src: url("fonts/OpenSans-Regular-webfont.eot");
+  src: url("fonts/OpenSans-Regular-webfont.eot?#iefix") format("embedded-opentype"), url("fonts/OpenSans-Regular-webfont.woff") format("woff"), url("fonts/OpenSans-Regular-webfont.ttf") format("truetype"), url("fonts/OpenSans-Regular-webfont.svg#OpenSans") format("svg"); }
+
+@font-face {
+  font-family: OpenSans;
+  font-weight: normal;
+  font-style: italic;
+  src: url("fonts/OpenSans-Italic-webfont.eot");
+  src: url("fonts/OpenSans-Italic-webfont.eot?#iefix") format("embedded-opentype"), url("fonts/OpenSans-Italic-webfont.woff") format("woff"), url("fonts/OpenSans-Italic-webfont.ttf") format("truetype"), url("fonts/OpenSans-Italic-webfont.svg#OpenSans") format("svg"); }
+
+@font-face {
+  font-family: OpenSans;
+  font-weight: bold;
+  font-style: normal;
+  src: url("fonts/OpenSans-Bold-webfont.eot");
+  src: url("fonts/OpenSans-Bold-webfont.eot?#iefix") format("embedded-opentype"), url("fonts/OpenSans-Bold-webfont.woff") format("woff"), url("fonts/OpenSans-Bold-webfont.ttf") format("truetype"), url("fonts/OpenSans-Bold-webfont.svg#OpenSans") format("svg"); }
+
+@font-face {
+  font-family: OpenSans;
+  font-weight: bold;
+  font-style: italic;
+  src: url("fonts/OpenSans-BoldItalic-webfont.eot");
+  src: url("fonts/OpenSans-BoldItalic-webfont.eot?#iefix") format("embedded-opentype"), url("fonts/OpenSans-BoldItalic-webfont.woff") format("woff"), url("fonts/OpenSans-BoldItalic-webfont.ttf") format("truetype"), url("fonts/OpenSans-BoldItalic-webfont.svg#OpenSans") format("svg"); }
+
+@font-face {
+  font-family: Glyphs;
+  font-weight: normal;
+  font-style: normal;
+  src: url("fonts/webhostinghub-glyphs.eot");
+  src: url("fonts/webhostinghub-glyphs.eot?#iefix") format("embedded-opentype"), url("fonts/webhostinghub-glyphs.woff") format("woff"), url("fonts/webhostinghub-glyphs.ttf") format("truetype"), url("fonts/webhostinghub-glyphs.svg#Glyphs") format("svg"); }
+
+* {
+  font-smooth: always;
+  -webkit-font-smoothing: antialiased; }
+
+a {
+  color: #2980b9;
+  text-decoration: none;
+  -webkit-transition: color, 0.5s, ease-in-out;
+  -moz-transition: color, 0.5s, ease-in-out;
+  transition: color, 0.5s, ease-in-out; }
+  a:hover {
+    color: #3498db; }
+  a:visited {
+    color: #8e44ad; }
+
+html {
+  background-image: url("images/tweed.png");
+  font: normal 62.5% OpenSans, Verdana, Geneva, sans-serif;
+  color: #2c3e50; }
+  @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min--moz-device-pixel-ratio: 1.3), only screen and (-o-min-device-pixel-ratio: 1.3 / 1), only screen and (min-resolution: 125dpi), only screen and (min-resolution: 1.3dppx) {
+    html {
+      background-image: url("images/tweed_@2X.png");
+      background-size: 200px 200px; } }
+
+body {
+  position: relative;
+  font-size: 1.2rem; }
+
+body > header {
+  position: relative;
+  height: 5rem;
+  margin: 0 auto 2rem;
+  *zoom: 1;
+  background: rgba(0, 0, 0, 0.33);
+  box-shadow: 0 0 5px black; }
+  body > header:before, body > header:after {
+    content: " ";
+    display: table; }
+  body > header:after {
+    clear: both; }
+  body > header h1 {
+    float: left;
+    margin: 0 0 0 2rem;
+    font: bold 3rem/4.5rem OpenSans, Verdana, Geneva, sans-serif; }
+    body > header h1 a {
+      color: #bdc3c7 !important;
+      text-shadow: 0 -1px 1px rgba(0, 0, 0, 0.5); }
+  body > header h2 {
+    float: left;
+    margin: 0 2rem;
+    font: bold 2rem/5rem OpenSans, Verdana, Geneva, sans-serif;
+    color: #95a5a6 !important;
+    text-shadow: 0 -1px 1px rgba(0, 0, 0, 0.5); }
+  body > header nav {
+    float: right;
+    margin: 0 2rem 0 0;
+    font: bold 1.5rem/5.25rem OpenSans, Verdana, Geneva, sans-serif; }
+    body > header nav a {
+      margin: 0 0 0 1.5rem;
+      color: #95a5a6 !important;
+      text-shadow: 0 -1px 1px rgba(0, 0, 0, 0.5);
+      -webkit-transition: color 0.5s ease-in-out;
+      -moz-transition: color 0.5s ease-in-out;
+      transition: color 0.5s ease-in-out; }
+      body > header nav a:hover {
+        color: #3498db !important;
+        text-shadow: 0 1px 1px rgba(0, 0, 0, 0.5); }
+
+body > section {
+  *zoom: 1;
+  max-width: 68em;
+  margin-left: auto;
+  margin-right: auto; }
+  body > section:before, body > section:after {
+    content: " ";
+    display: table; }
+  body > section:after {
+    clear: both; }
+  body > section form {
+    margin: 2.5rem 0;
+    padding: 1rem 0.5rem 0.75rem;
+    background-image: url("images/paper_fibers.png");
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); }
+    @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min--moz-device-pixel-ratio: 1.3), only screen and (-o-min-device-pixel-ratio: 1.3 / 1), only screen and (min-resolution: 125dpi), only screen and (min-resolution: 1.3dppx) {
+      body > section form {
+        background-image: url("images/paper_fibers_@2X.png");
+        background-size: 410px 410px; } }
+    body > section form fieldset {
+      border: 0; }
+      body > section form fieldset legend {
+        display: block;
+        width: 100%;
+        margin: 0 auto 0.75rem;
+        font: bold 2rem OpenSans, Verdana, Geneva, sans-serif;
+        text-align: left; }
+      body > section form fieldset div.form-elt {
+        margin: 0 auto 1.2rem;
+        *zoom: 1; }
+        body > section form fieldset div.form-elt:before, body > section form fieldset div.form-elt:after {
+          content: " ";
+          display: table; }
+        body > section form fieldset div.form-elt:after {
+          clear: both; }
+        body > section form fieldset div.form-elt label {
+          display: block;
+          margin: 0 auto 0.5rem;
+          font: normal 1.4rem OpenSans, Verdana, Geneva, sans-serif; }
+        body > section form fieldset div.form-elt input, body > section form fieldset div.form-elt textarea {
+          display: block;
+          width: 100%;
+          padding: 0.5rem 0.5rem;
+          -webkit-box-sizing: border-box;
+          -moz-box-sizing: border-box;
+          box-sizing: border-box;
+          font: normal 1.35rem/1.8rem OpenSans, Verdana, Geneva, sans-serif;
+          color: #7f8c8d;
+          border: 1px solid #bdc3c7;
+          border-radius: 5px; }
+          body > section form fieldset div.form-elt input::-webkit-input-placeholder, body > section form fieldset div.form-elt textarea::-webkit-input-placeholder {
+            color: #bdc3c7; }
+          body > section form fieldset div.form-elt input:-moz-placeholder, body > section form fieldset div.form-elt textarea:-moz-placeholder {
+            color: #bdc3c7; }
+          body > section form fieldset div.form-elt input::-moz-placeholder, body > section form fieldset div.form-elt textarea::-moz-placeholder {
+            color: #bdc3c7; }
+          body > section form fieldset div.form-elt input:-ms-input-placeholder, body > section form fieldset div.form-elt textarea:-ms-input-placeholder {
+            color: #bdc3c7; }
+          body > section form fieldset div.form-elt input:focus, body > section form fieldset div.form-elt textarea:focus {
+            outline: 0;
+            color: #2980b9;
+            border: 1px solid #3498db;
+            box-shadow: 0 0 10px rgba(52, 152, 219, 0.5); }
+            body > section form fieldset div.form-elt input:focus::-webkit-input-placeholder, body > section form fieldset div.form-elt textarea:focus::-webkit-input-placeholder {
+              color: rgba(52, 152, 219, 0.5); }
+            body > section form fieldset div.form-elt input:focus:-moz-placeholder, body > section form fieldset div.form-elt textarea:focus:-moz-placeholder {
+              color: rgba(52, 152, 219, 0.5); }
+            body > section form fieldset div.form-elt input:focus::-moz-placeholder, body > section form fieldset div.form-elt textarea:focus::-moz-placeholder {
+              color: rgba(52, 152, 219, 0.5); }
+            body > section form fieldset div.form-elt input:focus:-ms-input-placeholder, body > section form fieldset div.form-elt textarea:focus:-ms-input-placeholder {
+              color: rgba(52, 152, 219, 0.5); }
+          body > section form fieldset div.form-elt input#date, body > section form fieldset div.form-elt input#time, body > section form fieldset div.form-elt textarea#date, body > section form fieldset div.form-elt textarea#time {
+            float: left;
+            width: 49%; }
+          body > section form fieldset div.form-elt input#date, body > section form fieldset div.form-elt textarea#date {
+            margin: 0 2% 0 0; }
+      body > section form fieldset div.message p {
+        margin: 0;
+        font: normal 1.5rem OpenSans, Verdana, Geneva, sans-serif; }
+      body > section form fieldset div.error {
+        margin: 0 auto 0.5rem; }
+        body > section form fieldset div.error p {
+          font: bold 1.35rem OpenSans, Verdana, Geneva, sans-serif;
+          color: #c0392b; }
+      body > section form fieldset div.article-redactor {
+        position: relative;
+        *zoom: 1; }
+        body > section form fieldset div.article-redactor:before, body > section form fieldset div.article-redactor:after {
+          content: " ";
+          display: table; }
+        body > section form fieldset div.article-redactor:after {
+          clear: both; }
+        body > section form fieldset div.article-redactor div.form-elt {
+          width: 49%;
+          height: 40rem;
+          margin: 0 2% 0 0;
+          float: left; }
+          body > section form fieldset div.article-redactor div.form-elt textarea {
+            height: 37.5rem; }
+        body > section form fieldset div.article-redactor div.preview {
+          position: relative;
+          width: 49%;
+          height: 37.25rem;
+          float: left;
+          overflow: auto;
+          margin: 2.5rem 0 0;
+          font-size: 1.4rem;
+          z-index: 10; }
+        body > section form fieldset div.article-redactor:before {
+          content: "";
+          position: absolute;
+          top: 15rem;
+          right: 0px;
+          display: block;
+          width: 49%;
+          height: 10rem;
+          font: normal 10rem Glyphs;
+          color: rgba(189, 195, 199, 0.5);
+          text-align: center;
+          z-index: 5; }
+      body > section form fieldset div.button {
+        margin: 2rem auto 0;
+        text-align: center; }
+        body > section form fieldset div.button button {
+          border: 1px solid #147a3f;
+          border-radius: 3px;
+          box-shadow: inset 0 1px 0 0 #54ce87;
+          color: white;
+          display: inline-block;
+          font-size: 11px;
+          font-weight: bold;
+          background-color: #27ae60;
+          background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #27ae60), color-stop(100%, #168746));
+          background-image: -webkit-linear-gradient(#27ae60, #168746);
+          background-image: linear-gradient(#27ae60, #168746);
+          padding: 7px 18px;
+          text-decoration: none;
+          text-shadow: 0 1px 0 #0d6c35;
+          background-clip: padding-box;
+          font: bold 1.5rem OpenSans, Verdana, Geneva, sans-serif; }
+          body > section form fieldset div.button button:hover:not(:disabled) {
+            box-shadow: inset 0 1px 0 0 #34ba6d;
+            cursor: pointer;
+            background-color: #269555;
+            background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #269555), color-stop(100%, #14793f));
+            background-image: -webkit-linear-gradient(#269555, #14793f);
+            background-image: linear-gradient(#269555, #14793f); }
+          body > section form fieldset div.button button:active:not(:disabled) {
+            border: 1px solid #147a3f;
+            box-shadow: inset 0 0 8px 4px #136c38, inset 0 0 8px 4px #136c38, 0 1px 1px 0 #eeeeee; }
+          body > section form fieldset div.button button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed; }
+    body > section form#connect {
+      margin: 15rem 0;
+      display: block;
+      float: left;
+      margin-right: 2.35765%;
+      width: 31.76157%;
+      margin-left: 34.11922%; }
+      body > section form#connect:last-child {
+        margin-right: 0; }
+    body > section form#delete {
+      margin: 15rem 0;
+      display: block;
+      float: left;
+      margin-right: 2.35765%;
+      width: 48.82117%;
+      margin-left: 25.58941%; }
+      body > section form#delete:last-child {
+        margin-right: 0; }
+      body > section form#delete div.button button#discard {
+        border: 1px solid #bed2d7;
+        border-radius: 3px;
+        box-shadow: inset 0 1px 0 0 white;
+        color: #333333;
+        display: inline-block;
+        font-size: 11px;
+        font-weight: bold;
+        background-color: #ecf0f1;
+        background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ecf0f1), color-stop(100%, #c8d9dd));
+        background-image: -webkit-linear-gradient(#ecf0f1, #c8d9dd);
+        background-image: linear-gradient(#ecf0f1, #c8d9dd);
+        padding: 7px 18px;
+        text-decoration: none;
+        text-shadow: 0 1px 0 #f7fafa;
+        background-clip: padding-box;
+        font: normal 1.5rem OpenSans, Verdana, Geneva, sans-serif;
+        margin: 0 1.5rem 0 0; }
+        body > section form#delete div.button button#discard:hover:not(:disabled) {
+          box-shadow: inset 0 1px 0 0 #fbfbfc;
+          cursor: pointer;
+          background-color: #dee4e5;
+          background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #dee4e5), color-stop(100%, #bfd2d7));
+          background-image: -webkit-linear-gradient(#dee4e5, #bfd2d7);
+          background-image: linear-gradient(#dee4e5, #bfd2d7); }
+        body > section form#delete div.button button#discard:active:not(:disabled) {
+          border: 1px solid #bed2d7;
+          box-shadow: inset 0 0 8px 4px #b6cbd0, inset 0 0 8px 4px #b6cbd0, 0 1px 1px 0 #eeeeee; }
+        body > section form#delete div.button button#discard:disabled {
+          opacity: 0.5;
+          cursor: not-allowed; }
+      body > section form#delete div.button button#confirm {
+        border: 1px solid #8d2217;
+        border-radius: 3px;
+        box-shadow: inset 0 1px 0 0 #d36f65;
+        color: white;
+        display: inline-block;
+        font-size: 11px;
+        font-weight: bold;
+        background-color: #c0392b;
+        background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #c0392b), color-stop(100%, #9a2519));
+        background-image: -webkit-linear-gradient(#c0392b, #9a2519);
+        background-image: linear-gradient(#c0392b, #9a2519);
+        padding: 7px 18px;
+        text-decoration: none;
+        text-shadow: 0 1px 0 #801a0f;
+        background-clip: padding-box;
+        font: bold 1.5rem OpenSans, Verdana, Geneva, sans-serif; }
+        body > section form#delete div.button button#confirm:hover:not(:disabled) {
+          box-shadow: inset 0 1px 0 0 #c9493c;
+          cursor: pointer;
+          background-color: #a7362b;
+          background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #a7362b), color-stop(100%, #8c2217));
+          background-image: -webkit-linear-gradient(#a7362b, #8c2217);
+          background-image: linear-gradient(#a7362b, #8c2217); }
+        body > section form#delete div.button button#confirm:active:not(:disabled) {
+          border: 1px solid #8d2217;
+          box-shadow: inset 0 0 8px 4px #7e2016, inset 0 0 8px 4px #7e2016, 0 1px 1px 0 #eeeeee; }
+        body > section form#delete div.button button#confirm:disabled {
+          opacity: 0.5;
+          cursor: not-allowed; }
+        body > section form#delete div.button button#confirm:before {
+          content: " ";
+          font-family: Glyphs;
+          vertical-align: -0.2rem; }
+  body > section ul li {
+    position: relative;
+    margin: 0 auto 4rem;
+    list-style: inside none; }
+    body > section ul li .infos {
+      position: relative;
+      padding: 0.5rem 0.9rem;
+      background-image: url("images/paper_fibers.png");
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+      z-index: 20; }
+      @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min--moz-device-pixel-ratio: 1.3), only screen and (-o-min-device-pixel-ratio: 1.3 / 1), only screen and (min-resolution: 125dpi), only screen and (min-resolution: 1.3dppx) {
+        body > section ul li .infos {
+          background-image: url("images/paper_fibers_@2X.png");
+          background-size: 410px 410px; } }
+      body > section ul li .infos strong {
+        display: block;
+        margin: 0 auto 0.25rem;
+        font: bold 1.5rem OpenSans, Verdana, Geneva, sans-serif; }
+      body > section ul li .infos time {
+        display: block;
+        font: italic 1.2rem OpenSans, Verdana, Geneva, sans-serif;
+        color: #34495e;
+        margin: 0 auto 0.25rem; }
+    body > section ul li .tools {
+      position: absolute;
+      width: 100%;
+      bottom: 0;
+      right: 0;
+      padding: 0 1rem 0.5rem 0;
+      text-align: right;
+      *zoom: 1;
+      -webkit-transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      -moz-transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55); }
+      body > section ul li .tools:before, body > section ul li .tools:after {
+        content: " ";
+        display: table; }
+      body > section ul li .tools:after {
+        clear: both; }
+      body > section ul li .tools a {
+        display: block;
+        width: 2.5rem;
+        height: 3rem;
+        float: right;
+        margin: 0 0 0 1rem;
+        background: white;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        color: #2c3e50;
+        text-align: center;
+        -webkit-transition: all 0.25s ease-in-out;
+        -moz-transition: all 0.25s ease-in-out;
+        transition: all 0.25s ease-in-out; }
+        body > section ul li .tools a span {
+          display: none; }
+        body > section ul li .tools a:before {
+          font: normal 1.5rem/3.5rem Glyphs; }
+        body > section ul li .tools a.edit:before {
+          content: ""; }
+        body > section ul li .tools a.edit:hover {
+          color: white !important;
+          background: #16a085; }
+        body > section ul li .tools a.delete:before {
+          content: ""; }
+        body > section ul li .tools a.delete:hover {
+          color: white !important;
+          background: #c0392b; }
+    body > section ul li:hover .tools {
+      bottom: -3rem; }
+
+body > footer {
+  padding: 0 2rem; }
+  body > footer p {
+    color: #ecf0f1; }
+    body > footer p a {
+      color: #8bc4ea !important;
+      -webkit-transition: color 0.25s ease-in-out;
+      -moz-transition: color 0.25s ease-in-out;
+      transition: color 0.25s ease-in-out; }
+      body > footer p a:hover {
+        color: #3498db !important; }

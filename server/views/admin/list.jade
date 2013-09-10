@@ -8,6 +8,8 @@ block content
                     strong= oPost.title
                     time( datetime=oPost.date )= oPost.date
                 div.tools
-                    a( href="/admin/edit" + oPost.url ) éditer
-                    a( href="/admin/delete" + oPost.url ) supprimer
+                    a.edit( href="/admin/edit" + oPost.url )
+                        span éditer
+                    a.delete( href="/admin/delete" + oPost.url )
+                        span supprimer
 

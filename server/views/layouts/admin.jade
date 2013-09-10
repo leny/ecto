@@ -4,29 +4,32 @@ html
         meta( charset="utf-8" )/
         title= "ecto > administration > " + pageTitle
 
+        link( rel="stylesheet", href="/styles/admin.css" )/
+
     body
-        #wrapper
-            header
-                h1
-                    a( href="/" ) ecto
-                h2= "administration > " + pageTitle
+        header
+            h1
+                a( href="/" ) ecto
+            h2= "administration > " + pageTitle
 
-                block navigation
-                    nav
-                        a( href="/admin/list" ) Liste des billets
-                        a( href="/admin/add" ) Ajouter un billet
-                        a( href="/admin/exit" ) Déconnexion
+            block navigation
+                nav
+                    a( href="/admin/list" ) Liste des billets
+                    a( href="/admin/add" ) Ajouter un billet
+                    a( href="/admin/exit" ) Déconnexion
 
+        section
             block content
 
-            footer
-                p
-                    | Ce blog utilise le moteur
-                    = " "
-                    a( href="http://github.com/leny/ecto" ) ecto
-                    = " - "
-                    a( href="/" ) (public
-                    = " - "
-                    a( href="/admin" ) admin)
+        footer
+            p
+                | Ce blog utilise le moteur
+                = " "
+                a( href="http://github.com/leny/ecto" ) ecto
+                = " - ("
+                a( href="/" ) public
+                = " - "
+                a( href="/admin" ) admin
+                = ")"
 
         block scripts

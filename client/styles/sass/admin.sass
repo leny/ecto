@@ -1,0 +1,283 @@
+/* ecto
+ * Simple/fast node.js blogging system.
+ *
+ * SASS Document - /client/styles/sass/admin.sass
+ * -> target: /client/styles/admin.css
+ * Admin stylesheet
+ *
+ * Using Bourbon (http://bourbon.io) & Bourbon Neat (http://neat.bourbon.io)
+ *
+ * coded by leny
+ * started at 10/09/13
+ */
+
+@import bourbon
+@import neat
+
+@import libs/normalize
+
++font-face( OpenSans, "fonts/OpenSans-Regular-webfont" )
++font-face( OpenSans, "fonts/OpenSans-Italic-webfont", normal, italic )
++font-face( OpenSans, "fonts/OpenSans-Bold-webfont", bold )
++font-face( OpenSans, "fonts/OpenSans-BoldItalic-webfont", bold, italic )
+
+$OpenSans: OpenSans, $verdana
+
++font-face( Glyphs, "fonts/webhostinghub-glyphs" )
+
+// colors taken from http://designmodo.github.io/Flat-UI/
+$turquoise: #1abc9c
+$green_sea: #16a085
+$emerald: #2ecc71
+$nephritis: #27ae60
+$peter_river: #3498db
+$belize_hole: #2980b9
+$amethyst: #9b59b6
+$wisteria: #8e44ad
+$wet_asphalt: #34495e
+$midnight_blue: #2c3e50
+$sun_flower: #f1c40f
+$orange: #f39c12
+$carrot: #e67e22
+$pumpkin: #d35400
+$alizarin: #e74c3c
+$pomegranate: #c0392b
+$clouds: #ecf0f1
+$silver: #bdc3c7
+$concrete: #95a5a6
+$asbestos: #7f8c8d
+
+*
+    font-smooth: always
+    -webkit-font-smoothing: antialiased
+
+a
+    color: $belize_hole
+    text-decoration: none
+    +transition( color, .5s, ease-in-out )
+    &:hover
+        color: $peter_river
+    &:visited
+        color: $wisteria
+
+html
+    +retina-image( "images/tweed", 200px 200px, "png", "images/tweed_@2X" )
+    font: normal 62.5% $OpenSans
+    color: $midnight_blue
+
+body
+    position: relative
+    font-size: 1.2rem
+
+body > header
+    position: relative
+    height: 5rem
+    margin: 0 auto 2rem
+    +clearfix
+    background: rgba( black, .33 )
+    box-shadow: 0 0 5px black
+    h1
+        float: left
+        margin: 0 0 0 2rem
+        font: bold 3rem/4.5rem $OpenSans
+        a
+            color: $silver !important
+            text-shadow: 0 -1px 1px rgba( black, .5 )
+    h2
+        float: left
+        margin: 0 2rem
+        font: bold 2rem/5rem $OpenSans
+        color: $concrete !important
+        text-shadow: 0 -1px 1px rgba( black, .5 )
+    nav
+        float: right
+        margin: 0 2rem 0 0
+        font: bold 1.5rem/5.25rem $OpenSans
+        a
+            margin: 0 0 0 1.5rem
+            color: $concrete !important
+            text-shadow: 0 -1px 1px rgba( black, .5 )
+            +transition( color .5s ease-in-out )
+            &:hover
+                color: $peter_river !important
+                text-shadow: 0 1px 1px rgba( black, .5 )
+
+body > section
+    +outer-container
+    form
+        margin: 2.5rem 0
+        padding: 1rem .5rem .75rem
+        +retina-image( "images/paper_fibers", 410px 410px, "png", "images/paper_fibers_@2X" )
+        box-shadow: 0 0 10px rgba( black, .5 )
+        fieldset
+            border: 0
+            legend
+                display: block
+                width: 100%
+                margin: 0 auto .75rem
+                font: bold 2rem $OpenSans
+                text-align: left
+            div.form-elt
+                margin: 0 auto 1.2rem
+                +clearfix
+                label
+                    display: block
+                    margin: 0 auto .5rem
+                    font: normal 1.4rem $OpenSans
+                input, textarea
+                    display: block
+                    width: 100%
+                    padding: .5rem .5rem
+                    +box-sizing( border-box )
+                    font: normal 1.35rem/1.8rem $OpenSans
+                    color: $asbestos
+                    border: 1px solid $silver
+                    border-radius: 5px
+                    +placeholder
+                        color: $silver
+                    &:focus
+                        outline: 0
+                        color: $belize_hole
+                        border: 1px solid $peter_river
+                        box-shadow: 0 0 10px rgba( $peter_river, .5 )
+                        +placeholder
+                            color: rgba( $peter_river, .5 )
+                    &#date, &#time
+                        float: left
+                        width: 49%
+                    &#date
+                        margin: 0 2% 0 0
+            div.message
+                p
+                    margin: 0
+                    font: normal 1.5rem $OpenSans
+            div.error
+                margin: 0 auto .5rem
+                p
+                    font: bold 1.35rem $OpenSans
+                    color: $pomegranate
+            div.article-redactor
+                position: relative
+                +clearfix
+                div.form-elt
+                    width: 49%
+                    height: 40rem
+                    margin: 0 2% 0 0
+                    float: left
+                    textarea
+                        height: 37.5rem
+                div.preview
+                    position: relative
+                    width: 49%
+                    height: 37.25rem
+                    float: left
+                    overflow: auto
+                    margin: 2.5rem 0 0
+                    font-size: 1.4rem
+                    z-index: 10
+                &:before
+                    content: ""
+                    +position( absolute, 15rem 0px 0 0 )
+                    display: block
+                    width: 49%
+                    height: 10rem
+                    font: normal 10rem Glyphs
+                    color: rgba( $silver, .5 )
+                    text-align: center
+                    z-index: 5
+            div.button
+                margin: 2rem auto 0
+                text-align: center
+                button
+                    +button( simple, $nephritis )
+                    font: bold 1.5rem $OpenSans
+        &#connect
+            margin: 15rem 0
+            +span-columns( 4 )
+            +shift( 4 )
+        &#delete
+            margin: 15rem 0
+            +span-columns( 6 )
+            +shift( 3 )
+            div.button
+                button#discard
+                    +button( simple, $clouds )
+                    font: normal 1.5rem $OpenSans
+                    margin: 0 1.5rem 0 0
+                button#confirm
+                    +button( simple, $pomegranate )
+                    font: bold 1.5rem $OpenSans
+                    &:before
+                        content: " "
+                        font-family: Glyphs
+                        vertical-align: -.2rem
+    ul
+        li
+            position: relative
+            margin: 0 auto 4rem
+            list-style: inside none
+            .infos
+                position: relative
+                padding: .5rem .9rem
+                +retina-image( "images/paper_fibers", 410px 410px, "png", "images/paper_fibers_@2X" )
+                box-shadow: 0 0 10px rgba( black, .5 )
+                z-index: 20
+                strong
+                    display: block
+                    margin: 0 auto .25rem
+                    font: bold 1.5rem $OpenSans
+                time
+                    display: block
+                    font: italic 1.2rem $OpenSans
+                    color: $wet_asphalt
+                    margin: 0 auto .25rem
+            .tools
+                position: absolute
+                width: 100%
+                bottom: 0
+                right: 0
+                padding: 0 1rem .5rem 0
+                text-align: right
+                +clearfix
+                +transition( all .5s $ease-in-out-back )
+                a
+                    display: block
+                    width: 2.5rem
+                    height: 3rem
+                    float: right
+                    margin: 0 0 0 1rem
+                    background: white
+                    box-shadow: 0 0 10px rgba( black, .5 )
+                    color: $midnight_blue
+                    text-align: center
+                    +transition( all .25s ease-in-out )
+                    span
+                        display: none
+                    &:before
+                        font: normal 1.5rem/3.5rem Glyphs
+                    &.edit
+                        &:before
+                            content: ""
+                        &:hover
+                            color: white !important
+                            background: $green_sea
+                    &.delete
+                        &:before
+                            content: ""
+                        &:hover
+                            color: white !important
+                            background: $pomegranate
+            &:hover
+                .tools
+                    bottom: -3rem
+
+
+body > footer
+    padding: 0 2rem
+    p
+        color: $clouds
+        a
+            color: lighten( $peter_river, 20% ) !important
+            +transition( color .25s ease-in-out )
+            &:hover
+                color: $peter_river !important
