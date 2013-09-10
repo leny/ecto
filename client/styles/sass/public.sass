@@ -21,6 +21,8 @@
 +font-face( OpenSans, "fonts/OpenSans-Bold-webfont", bold )
 +font-face( OpenSans, "fonts/OpenSans-BoldItalic-webfont", bold, italic )
 
+$OpenSans: OpenSans, $verdana
+
 // colors taken from http://designmodo.github.io/Flat-UI/
 $turquoise: #1ABC9C
 $green_sea: #16A085
@@ -49,7 +51,7 @@ a
         color: $wisteria
 
 html
-    font: normal 62.5% OpenSans, $verdana
+    font: normal 62.5% $OpenSans
     color: $midnight_blue
 
 body
@@ -128,7 +130,7 @@ body
 #wrapper > header
     h1
         position: relative
-        padding: 0.5rem 2rem
+        padding: .5rem 2rem
         background: white
         font-size: 5rem
         a
@@ -137,7 +139,7 @@ body
 #wrapper > section
     h2
         margin-bottom: 3rem
-        padding: 0.5rem 2rem
+        padding: .5rem 2rem
         background: white
         font-size: 2.5rem
         color: $turquoise
@@ -149,11 +151,11 @@ body
             margin: 0 0 1rem
             a
                 display: block
-                padding: 0.5rem 2rem 0.65rem
+                padding: .5rem 2rem .65rem
                 +linear-gradient( 90deg, white, white )
                 color: $turquoise
                 text-decoration: none
-                +transition( all 0.5s $ease-in-out-back )
+                +transition( all .5s $ease-in-out-back )
                 strong
                     display: block
                     font-size: 1.5rem
@@ -174,27 +176,28 @@ body
     position: relative
     header, div.content, footer
         margin: 0 0 2rem
-        padding: 0.5rem 2rem
+        padding: .5rem 2rem
         background: white
     header
         color: $pumpkin
         h2
             font-size: 2.5rem
     div.content
+        font-size: 1.4rem
         hr
             height: 1px
             background: $pumpkin
             border: 0
     footer
         a
-            font: bold 1.4rem OpenSans
+            font: bold 1.4rem $OpenSans
             color: $pumpkin
             &:before
                 content: "< "
 
 #wrapper > aside
     position: relative
-    padding: 0.5rem 2rem
+    padding: .5rem 2rem
     background: white
     h2
         color: $green_sea
@@ -204,6 +207,6 @@ body
 #wrapper > footer
     p
         position: relative
-        padding: 0.5rem 2rem
+        padding: .5rem 2rem
         background: white
         font-size: 1.1rem
