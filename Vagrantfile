@@ -80,6 +80,7 @@ Vagrant.configure("2") do |config|
 
     config.vm.hostname = "blog.ecto.lan"
     config.vm.network :private_network, ip: "10.0.1.50"
+    config.vm.network :public_network
 
     config.vm.provider "virtualbox" do |v|
       v.name = "ecto"

@@ -77,6 +77,7 @@ Une fois cela fait et le repo de **ecto** cloné sur votre machine, utilisez la 
 
     $> vagrant up && vagrant ssh
 
+Lors de la procédure, il est possible que Vagrant vous demande de choisir une interface réseau : entrez le numéro de l'interface qui est actuellement connectée à internet.  
 Une fois la procédure d'installation terminée (ça peut prendre quelques minutes), vous serez connectés à la machine virtuelle d'**ecto**, entrez les commandes suivantes pour commencer à travailler :
 
     $> cd /vagrant
