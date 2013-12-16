@@ -1,0 +1,17 @@
+extends layout
+
+block content
+    a.add( href="/admin/add" )
+        span ajouter
+
+    ul
+        - for( var i = -1, oPost; oPost = posts[ ++i ]; )
+            li
+                div.infos
+                    strong= oPost.title
+                    time( datetime=oPost.date )= oPost.date
+                div.tools
+                    a.edit( href="/admin/edit" + oPost.url )
+                        span éditer
+                    a.delete( href="/admin/delete" + oPost.url )
+                        span supprimer

@@ -1,0 +1,21 @@
+extends layout
+
+block content
+    form#connect( method="post", action="/admin" )
+        fieldset
+            legend Connexion
+
+            div.form-elt
+                label( for="login" ) Login :
+                input#login( name="login", type="text", placeholder="Votre login", autocomplete="off", required, autofocus )/
+
+            div.form-elt
+                label( for="pass" ) Password :
+                input#pass( name="pass", type="password", placeholder="Votre mot de passe", required )/
+
+            if( error )
+                div.error
+                    p Login et/ou mot de passe incorrect
+
+            div.button
+                button( type="submit" ) Connexion

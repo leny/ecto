@@ -19,3 +19,7 @@ node_modules
 posts
 
 *.sublime-workspace
+
+ecto.sublime-project
+
+ecto.sublime-project

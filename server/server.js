@@ -17,12 +17,19 @@ var root = __dirname,
     oApp = express();
 
 oApp.use( express.compress() );
+oApp.use( express.json() );
+oApp.use( express.urlencoded() );
+oApp.use( express.cookieParser() );
+oApp.use( express.session( {
+    "secret": pkg.config.secret
+} ) );
 
 oApp.use( middlewares.log );
 
 oApp.set( "views", root + "/views" );
 oApp.set( "view engine", "jade" );
 
+require( root + "/controllers/admin.js" ).init( oApp );
 require( root + "/controllers/public.js" ).init( oApp );
 
 oApp.listen( pkg.config.port );
